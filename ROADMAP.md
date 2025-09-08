@@ -20,11 +20,11 @@
 ### ✅ Objectif : Validation 42 + bonus de base
 
 #### 1.1 Setup & Structure
-- [ ] **Architecture projet** : `src/`, `includes/`, `libs/`, `maps/`, `textures/`
-- [ ] **Libft** intégrée dans `libs/libft/`
+- [x] **Architecture projet** : `src/`, `includes/`, `libs/`, `maps/`, `textures/`
+- [x] **Libft** ajoutée à la racine `libft/` (norme 42)
 - [ ] **MLX42 (Codam)** configurée avec support RGBA + opacité
-- [ ] **Headers** avec structures principales
-- [ ] **Makefile** opérationnel avec toutes les libs
+- [x] **Headers** avec structures principales
+- [x] **Makefile** opérationnel avec toutes les libs
 
 #### 1.2 Parsing robuste (.cub)
 - [ ] **Validation fichier** : extension `.cub` + ouverture sécurisée
@@ -277,8 +277,8 @@ cub3D/
 │   ├── rendering.h     # fonctions rendu
 │   ├── gameplay.h      # fonctions jeu
 │   └── audio.h         # fonctions audio
+├── libft/              # ta libft (à la racine - norme 42)
 ├── libs/
-│   ├── libft/          # ta libft
 │   └── MLX42/          # auto-download par Makefile
 ├── assets/
 │   ├── textures/       # .xpm files

@@ -1,114 +1,126 @@
-# cub3D - Projet 42
+# 🎮 cub3D - Advanced Raycasting Engine
 
-## 📋 Todo List
+Un moteur de raycasting 3D avancé inspiré de Wolfenstein 3D, développé pour l'école 42.
 
-### 🏗️ Structure du projet
-- [ ] Créer l'architecture des dossiers (src/, includes/, libs/)
-- [ ] Configurer le Makefile complet
-- [ ] Créer les fichiers headers (.h)
-- [ ] Définir les structures principales
+## 🚀 Features
 
-### 📖 Parsing du fichier .cub
-- [ ] Parser les textures (NO, SO, WE, EA)
-- [ ] Parser les couleurs (F, C) 
-- [ ] Valider le format des couleurs RGB (0-255)
-- [ ] Parser la carte
-- [ ] Vérifier que la carte est fermée par des murs
-- [ ] Vérifier qu'il y a exactement un joueur (N, S, E, W)
-- [ ] Gérer les erreurs de parsing
-- [ ] Libérer la mémoire en cas d'erreur
+### ✅ Core (Obligatoire 42)
+- Raycasting engine avec textures orientées
+- Parsing robuste de fichiers .cub
+- Contrôles fluides (WASD + flèches)
+- Sol et plafond colorés
 
-### 🎮 Initialisation du jeu
-- [ ] Initialiser MLX
-- [ ] Créer la fenêtre
-- [ ] Charger les textures
-- [ ] Initialiser la position du joueur
-- [ ] Initialiser la direction du joueur
-- [ ] Configurer le plan de la caméra
+### ⭐ Bonus 42
+- Minimap en temps réel
+- Portes interactives
+- Rotation à la souris
+- Collisions réalistes
 
-### 🔍 Raycasting
-- [ ] Implémenter l'algorithme DDA (Digital Differential Analyzer)
-- [ ] Calculer la distance aux murs
-- [ ] Détecter les collisions avec les murs
-- [ ] Distinguer les murs horizontaux et verticaux
-- [ ] Calculer la hauteur des murs à l'écran
+### 🎯 Advanced Features
+- IA ennemis avec algorithme A*
+- Système d'armes et HUD
+- Audio 3D positionnel (OpenAL)
+- Génération procédurale de niveaux
+- Système de thèmes et modding
 
-### 🎨 Rendu graphique
-- [ ] Dessiner le sol avec la couleur spécifiée
-- [ ] Dessiner le plafond avec la couleur spécifiée
-- [ ] Appliquer les textures aux murs
-- [ ] Gérer l'orientation des textures selon la direction du mur
-- [ ] Optimiser le rendu pour éviter les scintillements
-
-### ⌨️ Contrôles
-- [ ] Déplacement avant/arrière (W, S)
-- [ ] Déplacement latéral (A, D)
-- [ ] Rotation de la caméra (flèches gauche/droite)
-- [ ] Gestion de la fermeture de fenêtre (ESC, croix rouge)
-- [ ] Éviter les déplacements dans les murs
-
-### 🧠 Gestion mémoire
-- [ ] Libérer toutes les textures
-- [ ] Libérer la carte
-- [ ] Libérer les structures MLX
-- [ ] Gérer les fuites mémoire
-- [ ] Tester avec valgrind
-
-### ✅ Tests et validation
-- [ ] Tester avec différents fichiers .cub
-- [ ] Tester les cas d'erreur
-- [ ] Vérifier les performances
-- [ ] Tester sur différentes résolutions
-- [ ] Validation avec les tests de l'école
-
-### 📝 Bonus (optionnel)
-- [ ] Collision avec les murs
-- [ ] Minimap
-- [ ] Portes qui s'ouvrent/ferment
-- [ ] Sprites animés
-- [ ] Rotation de la souris
-
-## 🔧 Commandes utiles
+## 🛠️ Installation
 
 ```bash
-# Compilation
+# Cloner le repo
+git clone <your-repo-url>
+cd cub3D
+
+# Ajouter ta libft dans libs/libft/
+# Le Makefile téléchargera automatiquement MLX42
+
+# Compiler
 make
 
-# Nettoyage
-make clean
-make fclean
-
-# Recompilation complète
-make re
-
-# Tests
-./cub3D maps/test.cub
+# Tester
+./cub3D maps/test_simple.cub
 ```
 
-## 📁 Structure recommandée
+## 🎮 Contrôles
+
+| Touche | Action |
+|--------|--------|
+| W, A, S, D | Déplacements |
+| ← → | Rotation caméra |
+| Souris | Rotation libre |
+| ESC | Quitter |
+| ESPACE | Ouvrir portes |
+| SHIFT | Course (bonus) |
+
+## 📁 Structure du projet
 
 ```
 cub3D/
 ├── src/
-│   ├── main.c
-│   ├── parsing/
-│   ├── raycasting/
-│   ├── rendering/
-│   └── utils/
-├── includes/
-│   └── cub3d.h
-├── maps/
-│   └── *.cub
-├── textures/
-│   └── *.xpm
+│   ├── core/           # Initialisation et boucle principale
+│   ├── parsing/        # Lecture fichiers .cub
+│   ├── raycasting/     # Algorithme DDA
+│   ├── rendering/      # Affichage MLX42
+│   ├── controls/       # Gestion inputs
+│   ├── gameplay/       # Armes, ennemis, items
+│   ├── ai/             # Intelligence artificielle A*
+│   ├── audio/          # Système audio OpenAL
+│   ├── generation/     # Génération procédurale
+│   └── utils/          # Fonctions utilitaires
+├── includes/           # Headers
+├── libft/              # Libft à la racine (norme 42)
 ├── libs/
-│   └── MLX42/
-└── Makefile
+│   └── MLX42/          # MLX42 auto-téléchargée
+├── assets/
+│   ├── textures/       # Fichiers .xpm
+│   ├── sounds/         # Fichiers audio
+│   └── themes/         # Configurations thèmes
+├── maps/               # Fichiers .cub de test
+└── tests/              # Scripts de validation
 ```
 
-## 🎯 Critères d'évaluation
-- Gestion d'erreurs robuste
-- Code propre et normé
-- Pas de fuites mémoire
-- Performance fluide
-- Respect du sujet
+## 📋 Todo List
+
+- [x] Architecture projet
+- [x] Headers et structures
+- [x] Fichiers de base avec headers 42
+- [ ] Parsing complet .cub
+- [ ] Raycasting fonctionnel
+- [ ] Rendu basique
+- [ ] Contrôles
+- [ ] Textures
+- [ ] Bonus 42
+- [ ] Gameplay avancé
+- [ ] IA et audio
+- [ ] Génération procédurale
+
+## 🧪 Tests
+
+```bash
+# Lancer les tests automatiques
+chmod +x tests/test_cub3d.sh
+./tests/test_cub3d.sh
+
+# Test manual
+./cub3D maps/test_simple.cub
+./cub3D maps/test_door.cub
+
+# Memory leaks
+valgrind ./cub3D maps/test_simple.cub
+```
+
+## 🎨 Système de thèmes
+
+Les thèmes sont configurables via des fichiers JSON dans `assets/themes/` :
+- `wolfenstein_classic.json` - Thème pierre classique
+- `cyberpunk_neon.json` - Thème futuriste néon
+
+## 📚 Ressources
+
+- [MLX42 Documentation](https://github.com/codam-coding-college/MLX42)
+- [Raycasting Tutorial](https://lodev.org/cgtutor/raycasting.html)
+- [A* Algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm)
+- [OpenAL Guide](https://www.openal.org/documentation/)
+
+---
+
+**Développé par radubos (@Catnox) - École 42 Mulhouse**

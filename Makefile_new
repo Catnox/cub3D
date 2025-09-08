@@ -46,8 +46,6 @@ SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/gameplay/shooting.c \
        $(SRCDIR)/gameplay/enemies.c \
        $(SRCDIR)/gameplay/enemy_render.c \
-       $(SRCDIR)/gameplay/pathfinding.c \
-       $(SRCDIR)/gameplay/game_over.c \
        $(SRCDIR)/utils/utils.c
 
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

@@ -17,83 +17,93 @@ static int	is_player_char(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
+/**
+ * Set player direction and camera plane based on spawn character
+ * 
+ * Uses a lookup table approach to set the direction vector and
+ * camera plane for raycasting based on the player's spawn orientation.
+ * 
+ * @param player Pointer to player structure
+ * @param dir Direction character (N, S, E, W)
+ */
 static void	set_player_direction(t_player *player, char dir)
 {
-	if (dir == 'N')
+	const t_direction_data	directions[4] = {
+		{0.0, -1.0, 0.66, 0.0},
+		{0.0, 1.0, -0.66, 0.0},
+		{1.0, 0.0, 0.0, 0.66},
+		{-1.0, 0.0, 0.0, -0.66}
+	};
+	const char				dir_chars[4] = {'N', 'S', 'E', 'W'};
+	int						i;
+
+	i = 0;
+	while (i < 4)
 	{
-		player->dir.x = 0.0;
-		player->dir.y = -1.0;
-		player->plane.x = 0.66;
-		player->plane.y = 0.0;
-	}
-	else if (dir == 'S')
-	{
-		player->dir.x = 0.0;
-		player->dir.y = 1.0;
-		player->plane.x = -0.66;
-		player->plane.y = 0.0;
-	}
-	else if (dir == 'E')
-	{
-		player->dir.x = 1.0;
-		player->dir.y = 0.0;
-		player->plane.x = 0.0;
-		player->plane.y = 0.66;
-	}
-	else if (dir == 'W')
-	{
-		player->dir.x = -1.0;
-		player->dir.y = 0.0;
-		player->plane.x = 0.0;
-		player->plane.y = -0.66;
+		if (dir_chars[i] == dir)
+		{
+			player->dir.x = directions[i].dir_x;
+			player->dir.y = directions[i].dir_y;
+			player->plane.x = directions[i].plane_x;
+			player->plane.y = directions[i].plane_y;
+			return;
+		}
+		i++;
 	}
 }
 
+/**
+ * Process a found player character at given coordinates
+ * 
+ * Sets up the player position, direction, and clears the map cell.
+ * 
+ * @param game Pointer to game structure
+ * @param x X coordinate of player
+ * @param y Y coordinate of player
+ * @param spawn_dir Direction character found
+ */
+static void	setup_player_at_position(t_game *game, int x, int y, char spawn_dir)
+{
+	game->player->pos.x = x + 0.5;
+	game->player->pos.y = y + 0.5;
+	set_player_direction(game->player, spawn_dir);
+	game->map->grid[y][x] = '0';
+	printf("Player spawn at (%.1f, %.1f) facing %c\n", 
+		game->player->pos.x, game->player->pos.y, spawn_dir);
+}
+
+/**
+ * Scan map for player starting position
+ * 
+ * Searches the entire map grid for player spawn characters (N,S,E,W).
+ * Ensures exactly one player position exists.
+ * 
+ * @param game Pointer to game structure
+ * @return 0 on success, 1 if no player or multiple players found
+ */
 int	find_player_position(t_game *game)
 {
-	int	x, y;
+	int	x;
 	int	player_found;
-	
+	int	y;
+
 	player_found = 0;
-	y = 0;
-	while (y < game->map->height)
+	y = -1;
+	while (++y < game->map->height)
 	{
-		x = 0;
-		while (x < game->map->width)
+		x = -1;
+		while (++x < game->map->width)
 		{
 			if (is_player_char(game->map->grid[y][x]))
 			{
 				if (player_found)
-				{
-					ft_putendl_fd("Error: Multiple player positions found", 2);
-					return (1);
-				}
-				
-				// Set player position (center of the cell)
-				game->player->pos.x = x + 0.5;
-				game->player->pos.y = y + 0.5;
-				
-				// Set player direction based on character
-				char spawn_dir = game->map->grid[y][x];
-				set_player_direction(game->player, spawn_dir);
-				
-				// Replace player character with empty space
-				game->map->grid[y][x] = '0';
-				
+					return (ft_putendl_fd("Error: Multiple player positions found", 2), 1);
+				setup_player_at_position(game, x, y, game->map->grid[y][x]);
 				player_found = 1;
-				printf("Player spawn at (%.1f, %.1f) facing %c\n", 
-					game->player->pos.x, game->player->pos.y, spawn_dir);
 			}
-			x++;
 		}
-		y++;
 	}
-	
 	if (!player_found)
-	{
-		ft_putendl_fd("Error: No player position found in map", 2);
-		return (1);
-	}
-	
+		return (ft_putendl_fd("Error: No player position found in map", 2), 1);
 	return (0);
 }

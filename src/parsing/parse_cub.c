@@ -12,34 +12,60 @@
 
 #include "../../includes/cub3d.h"
 
+static char	**resize_lines_array(char **lines, int *capacity)
+{
+	char	**new_lines;
+
+	*capacity *= 2;
+	new_lines = realloc(lines, sizeof(char *) * (*capacity));
+	if (!new_lines)
+	{
+		free(lines);
+		return (NULL);
+	}
+	return (new_lines);
+}
+
+static void	process_line(char *line)
+{
+	int	len;
+
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+}
+
+/**
+ * Read all lines from a file descriptor into a dynamic array
+ * 
+ * Reads the entire file line by line using get_next_line and stores
+ * each line in a dynamically growing array. The array automatically
+ * resizes when capacity is exceeded.
+ * 
+ * @param fd File descriptor to read from
+ * @return NULL-terminated array of strings, or NULL on failure
+ */
 static char	**read_file_lines(int fd)
 {
 	char	**lines;
 	char	*line;
 	int		capacity;
 	int		count;
-	
+
 	capacity = 100;
 	count = 0;
 	lines = malloc(sizeof(char *) * capacity);
 	if (!lines)
 		return (NULL);
-	
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		if (count >= capacity - 1)
 		{
-			capacity *= 2;
-			lines = realloc(lines, sizeof(char *) * capacity);
+			lines = resize_lines_array(lines, &capacity);
 			if (!lines)
 				return (NULL);
 		}
-		
-		// Remove newline if present
-		int len = ft_strlen(line);
-		if (len > 0 && line[len - 1] == '\n')
-			line[len - 1] = '\0';
-		
+		process_line(line);
 		lines[count++] = line;
 	}
 	lines[count] = NULL;
@@ -62,56 +88,90 @@ static void	free_lines(char **lines)
 	free(lines);
 }
 
-int	parse_cub_file(t_game *game, char *filename)
+static int	validate_cub_extension(char *filename)
 {
-	int		fd;
-	char	**lines;
 	size_t	len;
-	int		i;
-	
-	// Validate .cub extension
+
 	len = ft_strlen(filename);
 	if (len < 4 || ft_strncmp(filename + len - 4, ".cub", 4) != 0)
 		return (error_exit("Invalid file extension. Expected .cub"), 1);
-	
-	// Open file
+	return (0);
+}
+
+static char	**open_and_read_file(char *filename)
+{
+	int		fd;
+	char	**lines;
+
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (error_exit("Failed to open map file"), 1);
-	
-	// Read all lines
+	{
+		error_exit("Failed to open map file");
+		return (NULL);
+	}
 	lines = read_file_lines(fd);
 	close(fd);
 	if (!lines)
-		return (error_exit("Failed to read file"), 1);
-	
-	// Allocate structures
+	{
+		error_exit("Failed to read file");
+		return (NULL);
+	}
+	return (lines);
+}
+
+static int	allocate_game_structures(t_game *game)
+{
 	game->map = ft_calloc(1, sizeof(t_map));
 	game->player = ft_calloc(1, sizeof(t_player));
 	game->textures = ft_calloc(1, sizeof(t_texture));
 	
 	if (!game->map || !game->player || !game->textures)
-		return (free_lines(lines), error_exit("Memory allocation failed"), 1);
+	{
+		if (game->map)
+			free(game->map);
+		if (game->player)
+			free(game->player);
+		if (game->textures)
+			free(game->textures);
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * Parse and load a .cub map file for the cub3D game
+ * 
+ * This function is the main entry point for parsing .cub files and performs
+ * a complete validation and loading process. The .cub file format contains:
+ * - Texture paths for the four wall directions (NO, SO, EA, WE)
+ * - Floor and ceiling colors (F, C) in RGB format
+ * - A 2D map layout using characters (0=floor, 1=wall, N/S/E/W=player start, etc.)
+ * 
+ * @param game Pointer to the main game structure to populate
+ * @param filename Path to the .cub file to parse
+ * @return 0 on successful parsing and validation, 1 on any error
+ */
+int	parse_cub_file(t_game *game, char *filename)
+{
+	char	**lines;
+	int		i;
 	
-	// Parse textures and colors first
+	if (validate_cub_extension(filename) != 0)
+		return (1);
+	lines = open_and_read_file(filename);
+	if (!lines)
+		return (1);
+	if (allocate_game_structures(game) != 0)
+		return (free_lines(lines), error_exit("Memory allocation failed"), 1);
 	i = 0;
 	while (lines[i])
 	{
 		if (parse_textures(game, lines[i]) != 0 || parse_colors(game, lines[i]) != 0)
-		{
-			free_lines(lines);
-			return (1);
-		}
+			return (free_lines(lines), 1);
 		i++;
 	}
-	
-	// Parse the map
 	if (parse_map(game, lines) != 0)
-	{
-		free_lines(lines);
-		return (1);
-	}
-	
+		return (free_lines(lines), 1);
 	free_lines(lines);
 	return (validate_map(game->map));
 }

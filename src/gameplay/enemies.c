@@ -12,36 +12,51 @@
 
 #include "../../includes/cub3d.h"
 
-int	init_enemies(t_game *game)
+void	init_enemies_stats(t_game *game)
 {
-	game->enemies = malloc(sizeof(t_enemies));
-	if (!game->enemies)
-		return (0);
-	
-	ft_memset(game->enemies, 0, sizeof(t_enemies));
+	if (!game || !game->enemies)
+		return;
 	game->enemies->count = 0;
 	game->enemies->spawn_timer = 0.0;
-	
-	// For now, we'll create simple colored textures for enemies
-	// In a full implementation, you'd load actual enemy sprites
 	game->enemies->texture_guard = NULL;
 	game->enemies->texture_officer = NULL;
 	game->enemies->texture_dog = NULL;
-	
-	// Spawn some initial enemies on the map
-	// Look for 'G' characters in the map for enemy positions (G = Guard)
-	for (int y = 0; y < game->map->height; y++)
+}
+/**
+ * Initialize enemy data structures
+ * 
+ * This function allocates memory for the enemy data structures and initializes
+ * their values to defaults. It should be called at the start of the game to
+ * set up the enemy system.
+ * 
+ * @param game Pointer to the main game structure
+ * @return 0 on failure, 1 on success
+ */
+int	init_enemies(t_game *game)
+{
+	int x;
+	int y;
+
+	y = 0;
+	game->enemies = malloc(sizeof(t_enemies));
+	if (!game->enemies)
+		return (0);
+	ft_memset(game->enemies, 0, sizeof(t_enemies));
+	init_enemies_stats(game);
+	while (y < game->map->height)
 	{
-		for (int x = 0; x < game->map->width; x++)
+		x = 0;
+		while (x < game->map->width)
 		{
 			if (game->map->grid[y][x] == 'G')
 			{
-				spawn_enemy(game, x + 0.5, y + 0.5, 0); // Guard type
-				game->map->grid[y][x] = '0'; // Replace with empty space
+				spawn_enemy(game, x + 0.5, y + 0.5, 0);
+				game->map->grid[y][x] = '0';
 			}
+			x++;
 		}
+		y++;
 	}
-	
 	return (1);
 }
 

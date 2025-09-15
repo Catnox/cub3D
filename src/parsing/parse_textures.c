@@ -12,82 +12,73 @@
 
 #include "../../includes/cub3d.h"
 
+/**
+ * Load a single texture and assign it to the specified location
+ * 
+ * @param path Path to the texture file
+ * @param texture_ptr Pointer to where the texture should be stored
+ * @param id Identifier string for logging
+ * @return 0 on success, 1 on failure
+ */
+static int	load_texture(char *path, mlx_texture_t **texture_ptr, char *id)
+{
+	mlx_texture_t	*texture;
+
+	printf("Trying to load %s texture: '%s'\n", id, path);
+	texture = mlx_load_png(path);
+	if (texture)
+	{
+		*texture_ptr = texture;
+		printf("Texture %s: %s loaded successfully\n", id, path);
+		return (0);
+	}
+	printf("Texture %s: %s failed to load\n", id, path);
+	return (1);
+}
+
+/**
+ * Process a texture line using lookup table approach
+ * 
+ * @param game Pointer to game structure
+ * @param identifier Texture identifier (NO, SO, EA, WE, DO)
+ * @param path Path to texture file
+ * @return 0 on success, 1 on failure
+ */
+static int	process_texture_line(t_game *game, char *identifier, char *path)
+{
+	const t_texture_map	texture_map[5] = {
+		{"NO", &game->map->textures.north},
+		{"SO", &game->map->textures.south},
+		{"EA", &game->map->textures.east},
+		{"WE", &game->map->textures.west},
+		{"DO", &game->map->textures.door}
+	};
+	int					i;
+
+	i = 0;
+	while (i < 5)
+	{
+		if (ft_strncmp(identifier, texture_map[i].identifier, 3) == 0)
+			return (load_texture(path, texture_map[i].texture_ptr, identifier));
+		i++;
+	}
+	return (0); 
+}
+
 int	parse_textures(t_game *game, char *line)
 {
 	char	*trimmed;
 	char	**split;
-	
+	int		result;
+
 	trimmed = ft_strtrim(line, " \t\n");
 	if (!trimmed)
 		return (1);
-	
 	split = ft_split(trimmed, ' ');
 	if (!split || !split[0] || !split[1])
-	{
-		free(trimmed);
-		free_split(split);
-		return (0); // Not a texture line, continue
-	}
-	
-	// Load PNG textures based on direction
-	if (ft_strncmp(split[0], "NO", 3) == 0)
-	{
-		printf("Trying to load North texture: '%s'\n", split[1]);
-		mlx_texture_t *texture = mlx_load_png(split[1]);
-		if (texture)
-		{
-			game->map->textures.north = texture;
-			printf("Texture NO: %s loaded successfully\n", split[1]);
-		}
-		else
-			printf("Texture NO: %s failed to load\n", split[1]);
-	}
-	else if (ft_strncmp(split[0], "SO", 3) == 0)
-	{
-		mlx_texture_t *texture = mlx_load_png(split[1]);
-		if (texture)
-		{
-			game->map->textures.south = texture;
-			printf("Texture SO: %s loaded successfully\n", split[1]);
-		}
-		else
-			printf("Texture SO: %s failed to load\n", split[1]);
-	}
-	else if (ft_strncmp(split[0], "WE", 3) == 0)
-	{
-		mlx_texture_t *texture = mlx_load_png(split[1]);
-		if (texture)
-		{
-			game->map->textures.west = texture;
-			printf("Texture WE: %s loaded successfully\n", split[1]);
-		}
-		else
-			printf("Texture WE: %s failed to load\n", split[1]);
-	}
-	else if (ft_strncmp(split[0], "EA", 3) == 0)
-	{
-		mlx_texture_t *texture = mlx_load_png(split[1]);
-		if (texture)
-		{
-			game->map->textures.east = texture;
-			printf("Texture EA: %s loaded successfully\n", split[1]);
-		}
-		else
-			printf("Texture EA: %s failed to load\n", split[1]);
-	}
-	else if (ft_strncmp(split[0], "DO", 3) == 0)
-	{
-		mlx_texture_t *texture = mlx_load_png(split[1]);
-		if (texture)
-		{
-			game->map->textures.door = texture;
-			printf("Texture DO: %s loaded successfully\n", split[1]);
-		}
-		else
-			printf("Texture DO: %s failed to load\n", split[1]);
-	}
-	
+		return (free(trimmed), free_split(split), 0);
+	result = process_texture_line(game, split[0], split[1]);
 	free(trimmed);
 	free_split(split);
-	return (0);
+	return (result);
 }

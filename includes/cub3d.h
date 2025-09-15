@@ -192,6 +192,39 @@ typedef struct s_game
 	int			game_over;
 }	t_game;
 
+/**
+ * Structure to hold map parsing parameters
+ * 
+ * Groups related map parsing information to reduce parameter count
+ * and improve code organization.
+ */
+typedef struct s_map_params
+{
+	int	start;
+	int	height;
+	int	width;
+}	t_map_params;
+
+/**
+ * Structure to hold direction and camera plane vectors
+ */
+typedef struct s_direction_data
+{
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}	t_direction_data;
+
+/**
+ * Structure to map texture identifiers to their storage locations
+ */
+typedef struct s_texture_map
+{
+	char			*identifier;
+	mlx_texture_t	**texture_ptr;
+}	t_texture_map;
+
 /* Core functions */
 int		init_game(t_game *game, char *map_file);
 void	cleanup_game(t_game *game);

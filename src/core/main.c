@@ -12,6 +12,17 @@
 
 #include "../../includes/cub3d.h"
 
+/**
+ * Main entry point for the cub3D application
+ * 
+ * This function initializes the game state, loads the specified map file,
+ * and starts the main game loop. It handles command-line arguments to ensure
+ * a map file is provided, and performs cleanup on exit.
+ * 
+ * @param argc Argument count
+ * @param argv Argument vector (expects map file as argv[1])
+ * @return Exit status code (0 on success, 1 on error)
+ */
 int	main(int argc, char **argv)
 {
 	t_game	game;

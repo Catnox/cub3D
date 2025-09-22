@@ -28,6 +28,7 @@ static int	is_player_char(char c)
  */
 static void	set_player_direction(t_player *player, char dir)
 {
+	//fix
 	const t_direction_data	directions[4] = {
 		{0.0, -1.0, 0.66, 0.0},
 		{0.0, 1.0, -0.66, 0.0},

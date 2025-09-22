@@ -21,7 +21,7 @@ LIBFTDIR = libft
 MLX42DIR = libs/MLX42
 OBJDIR = obj
 
-# Source files
+# Source files (NON-BONUS VERSION)
 SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/core/init.c \
        $(SRCDIR)/core/cleanup.c \
@@ -35,20 +35,22 @@ SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/raycasting/raycasting.c \
        $(SRCDIR)/raycasting/dda.c \
        $(SRCDIR)/rendering/render.c \
-       $(SRCDIR)/rendering/minimap.c \
        $(SRCDIR)/controls/keyboard.c \
        $(SRCDIR)/controls/movements.c \
-       $(SRCDIR)/controls/mouse.c \
-       $(SRCDIR)/game/doors.c \
-       $(SRCDIR)/gameplay/hud.c \
-       $(SRCDIR)/gameplay/hud_draw.c \
-       $(SRCDIR)/gameplay/weapon.c \
-       $(SRCDIR)/gameplay/shooting.c \
-       $(SRCDIR)/gameplay/enemies.c \
-       $(SRCDIR)/gameplay/enemy_render.c \
-       $(SRCDIR)/gameplay/pathfinding.c \
-       $(SRCDIR)/gameplay/game_over.c \
        $(SRCDIR)/utils/utils.c
+
+# BONUS FILES - COMMENTED OUT FOR NON-BONUS VERSION
+#       $(SRCDIR)/rendering/minimap.c \
+#       $(SRCDIR)/controls/mouse.c \
+#       $(SRCDIR)/game/doors.c \
+#       $(SRCDIR)/gameplay/hud.c \
+#       $(SRCDIR)/gameplay/hud_draw.c \
+#       $(SRCDIR)/gameplay/weapon.c \
+#       $(SRCDIR)/gameplay/shooting.c \
+#       $(SRCDIR)/gameplay/enemies.c \
+#       $(SRCDIR)/gameplay/enemy_render.c \
+#       $(SRCDIR)/gameplay/pathfinding.c \
+#       $(SRCDIR)/gameplay/game_over.c
 
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

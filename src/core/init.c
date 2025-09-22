@@ -38,11 +38,11 @@ int init_game_state_n_MLX(t_game *game)
 }
 
 /**
- * Initialize player statistics and attributes
+ * Initialize basic player data (NON-BONUS VERSION)
  * 
- * Sets up the initial player statistics including health points, ammunition,
- * score, and collected keys. All values are set to their default starting
- * values for a new game.
+ * For the non-bonus version, this function is simplified and only ensures
+ * the player structure exists. Player position and direction are handled
+ * in find_player_position(). Bonus features like HP, ammo, score removed.
  * 
  * @param game Pointer to the main game structure containing player data
  * @return 0 on success, 1 if game or player is NULL
@@ -51,17 +51,23 @@ int init_player_stats(t_game *game)
 {
 	if (!game || !game->player)
 		return (1);
-	game->player->max_hp = 100;
-	game->player->hp = game->player->max_hp;
-	game->player->max_ammo = 100;
-	game->player->ammo = game->player->max_ammo;
-	game->player->score = 0;
-	game->player->keys = 0;
+	
+	/* BONUS FEATURES - COMMENTED OUT FOR NON-BONUS VERSION */
+	// game->player->max_hp = 100;
+	// game->player->hp = game->player->max_hp;
+	// game->player->max_ammo = 100;
+	// game->player->ammo = game->player->max_ammo;
+	// game->player->score = 0;
+	// game->player->keys = 0;
+	
+	/* For non-bonus version, only basic player setup is needed */
+	/* Position and direction are set in find_player_position() */
+	
 	return (0);
 }
 
 /**
- * Master initialization function for the entire game
+ * Master initialization function for the entire game (NON-BONUS VERSION)
  * 
  * This function orchestrates the complete initialization process of the cub3D game.
  * It performs the following steps in order:
@@ -69,12 +75,10 @@ int init_player_stats(t_game *game)
  * 2. Initializes MLX42 graphics system and game state
  * 3. Parses the .cub map file for textures, colors, and map data
  * 4. Locates the player's starting position on the map
- * 5. Sets up initial player statistics (HP, ammo, score, keys)
+ * 5. Sets up basic player data (position and direction only)
  * 6. Displays the main image buffer on the window
- * 7. Initializes interactive doors system
- * 8. Sets up the HUD (Heads-Up Display) interface
- * 9. Initializes weapon system and animations
- * 10. Spawns and configures enemy entities
+ * 
+ * BONUS FEATURES REMOVED: doors, HUD, weapons, enemies, player stats
  * 
  * @param game Pointer to the main game structure to initialize
  * @param map_file Path to the .cub map file to load
@@ -93,13 +97,16 @@ int	init_game(t_game *game, char *map_file)
 		return (1);
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 		return (error_exit("Failed to display image"), 1);
-	init_doors(game);
-	if (!init_hud(game))
-		return (error_exit("Failed to initialize HUD"), 1);
-	if (!init_weapon(game))
-		return (error_exit("Failed to initialize weapon"), 1);
-	if (!init_enemies(game))
-		return (error_exit("Failed to initialize enemies"), 1);
+	
+	/* BONUS FEATURES - COMMENTED OUT FOR NON-BONUS VERSION */
+	// init_doors(game);
+	// if (!init_hud(game))
+	//     return (error_exit("Failed to initialize HUD"), 1);
+	// if (!init_weapon(game))
+	//     return (error_exit("Failed to initialize weapon"), 1);
+	// if (!init_enemies(game))
+	//     return (error_exit("Failed to initialize enemies"), 1);
+	
 	game->is_running = 1;
 	return (0);
 }

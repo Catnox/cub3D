@@ -12,17 +12,39 @@
 
 #include "../../includes/cub3d.h"
 
-static char	**resize_lines_array(char **lines, int *capacity)
+/**
+ * Resize the lines array when capacity is exceeded
+ * 
+ * Doubles the capacity of the lines array using malloc and manual copying
+ * to accommodate more lines when the current capacity is reached.
+ * This approach avoids realloc for better control and 42 compatibility.
+ * 
+ * @param lines Pointer to the current lines array
+ * @param capacity Pointer to current capacity (will be doubled)
+ * @param count Current number of lines in the array
+ * @return Pointer to resized array, or NULL on failure
+ */
+static char	**resize_lines_array(char **lines, int *capacity, int count)
 {
 	char	**new_lines;
+	int		i;
+	int		new_capacity;
 
-	*capacity *= 2;
-	new_lines = realloc(lines, sizeof(char *) * (*capacity));
+	new_capacity = (*capacity) * 2;
+	new_lines = malloc(sizeof(char *) * new_capacity);
 	if (!new_lines)
 	{
 		free(lines);
 		return (NULL);
 	}
+	i = 0;
+	while (i < count)
+	{
+		new_lines[i] = lines[i];
+		i++;
+	}
+	free(lines);
+	*capacity = new_capacity;
 	return (new_lines);
 }
 
@@ -52,16 +74,17 @@ static char	**read_file_lines(int fd)
 	int		capacity;
 	int		count;
 
-	capacity = 100;
+	capacity = 16;
 	count = 0;
 	lines = malloc(sizeof(char *) * capacity);
 	if (!lines)
 		return (NULL);
+	//fix
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		if (count >= capacity - 1)
 		{
-			lines = resize_lines_array(lines, &capacity);
+			lines = resize_lines_array(lines, &capacity, count);
 			if (!lines)
 				return (NULL);
 		}
@@ -124,7 +147,6 @@ static int	allocate_game_structures(t_game *game)
 	game->map = ft_calloc(1, sizeof(t_map));
 	game->player = ft_calloc(1, sizeof(t_player));
 	game->textures = ft_calloc(1, sizeof(t_texture));
-	
 	if (!game->map || !game->player || !game->textures)
 	{
 		if (game->map)

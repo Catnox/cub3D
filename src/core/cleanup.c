@@ -18,8 +18,11 @@ void clean_map(t_game *game)
 		return ;
 	if (game->map->grid)
 		free_split(game->map->grid);
-	if (game->map->doors)
-		free(game->map->doors);
+	
+	/* BONUS FEATURE DISABLED - doors */
+	// if (game->map->doors)
+	//     free(game->map->doors);
+	
 	free(game->map);
 }
 
@@ -51,9 +54,12 @@ void	cleanup_game(t_game *game)
 {
 	if (!game)
 		return ;
-	cleanup_hud(game);
-	cleanup_weapon(game);
-	cleanup_enemies(game);
+	
+	/* BONUS FEATURES DISABLED FOR NON-BONUS VERSION */
+	// cleanup_hud(game);
+	// cleanup_weapon(game);
+	// cleanup_enemies(game);
+	
 	clean_textures(game);
 	clean_map(game);
 	if (game->player)

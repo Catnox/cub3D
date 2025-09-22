@@ -23,8 +23,8 @@ void	render_frame(t_game *game)
 	// Cast rays and draw walls
 	cast_rays(game);
 	
-	// Draw minimap on top
-	draw_minimap(game);
+	/* BONUS FEATURE DISABLED - minimap */
+	// draw_minimap(game);
 }
 
 void	draw_floor_ceiling(t_game *game)

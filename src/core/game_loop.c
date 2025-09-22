@@ -35,20 +35,27 @@ static void	game_update(void *param)
 	t_game	*game;
 	
 	game = (t_game *)param;
-	handle_game_over(game);
-	if (game->game_over)
-	{
-		render_game_over_screen(game);
-		return;
-	}
+	/* BONUS FEATURES DISABLED FOR NON-BONUS VERSION */
+	// handle_game_over(game);
+	// if (game->game_over)
+	// {
+	//     render_game_over_screen(game);
+	//     return;
+	// }
+	
 	handle_continuous_input(game);
-	update_doors(game);
-	update_weapon(game);
-	update_enemies(game);
+	
+	/* BONUS FEATURES DISABLED */
+	// update_doors(game);
+	// update_weapon(game);
+	// update_enemies(game);
+	
 	render_frame(game);
-	render_enemies(game);
-	render_hud(game);
-	render_weapon(game);
+	
+	/* BONUS FEATURES DISABLED */
+	// render_enemies(game);
+	// render_hud(game);
+	// render_weapon(game);
 }
 
 /**
@@ -70,8 +77,11 @@ static void	game_update(void *param)
 void	game_loop(t_game *game)
 {
 	mlx_key_hook(game->mlx, handle_keyboard, game);
-	mlx_cursor_hook(game->mlx, handle_mouse, game);
-	mlx_mouse_hook(game->mlx, handle_mouse_click, game);
+	
+	/* BONUS FEATURES DISABLED - Mouse controls for weapons */
+	// mlx_cursor_hook(game->mlx, handle_mouse, game);
+	// mlx_mouse_hook(game->mlx, handle_mouse_click, game);
+	
 	mlx_close_hook(game->mlx, (void *)mlx_close_window, game->mlx);
 	mlx_loop_hook(game->mlx, game_update, game);
 	mlx_loop(game->mlx);

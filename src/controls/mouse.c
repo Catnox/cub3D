@@ -19,14 +19,11 @@ void	handle_mouse(double xpos, double ypos, void *param)
 	double		delta_x;
 	
 	game = (t_game *)param;
-	(void)ypos; // For future pitch implementation
-	
+	(void)ypos;
 	delta_x = xpos - last_x;
 	last_x = xpos;
-	
-	// Rotate player based on mouse movement
 	if (delta_x != 0)
-		rotate_player(game, delta_x * 0.001); // Sensitivity factor
+		rotate_player(game, delta_x * 0.001);
 }
 
 void	handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
@@ -35,19 +32,11 @@ void	handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods
 	
 	game = (t_game *)param;
 	(void)mods;
-	
 	if (action == MLX_PRESS)
 	{
 		if (button == MLX_MOUSE_BUTTON_LEFT)
-		{
-			// Left click to shoot
 			enhanced_shoot_weapon(game);
-		}
 		else if (button == MLX_MOUSE_BUTTON_RIGHT)
-		{
-			// Right click could be used for secondary actions
-			// For now, let's use it for quick reload
 			reload_weapon(game);
-		}
 	}
 }

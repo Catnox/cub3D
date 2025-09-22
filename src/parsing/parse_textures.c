@@ -13,6 +13,31 @@
 #include "../../includes/cub3d.h"
 
 /**
+ * Get texture pointer based on identifier string
+ * 
+ * Returns a pointer to the appropriate texture field based on the
+ * identifier string. This avoids complex pointer-to-pointer mapping.
+ * 
+ * @param game Pointer to game structure
+ * @param identifier Texture identifier (NO, SO, EA, WE, DO)
+ * @return Pointer to the texture location, or NULL if unknown
+ */
+static mlx_texture_t	**get_texture_ptr_by_id(t_game *game, char *identifier)
+{
+	if (ft_strncmp(identifier, "NO", 2) == 0)
+		return (&game->map->textures.north);
+	else if (ft_strncmp(identifier, "SO", 2) == 0)
+		return (&game->map->textures.south);
+	else if (ft_strncmp(identifier, "EA", 2) == 0)
+		return (&game->map->textures.east);
+	else if (ft_strncmp(identifier, "WE", 2) == 0)
+		return (&game->map->textures.west);
+	else if (ft_strncmp(identifier, "DO", 2) == 0)
+		return (&game->map->textures.door);
+	return (NULL);
+}
+
+/**
  * Load a single texture and assign it to the specified location
  * 
  * @param path Path to the texture file
@@ -46,23 +71,12 @@ static int	load_texture(char *path, mlx_texture_t **texture_ptr, char *id)
  */
 static int	process_texture_line(t_game *game, char *identifier, char *path)
 {
-	const t_texture_map	texture_map[5] = {
-		{"NO", &game->map->textures.north},
-		{"SO", &game->map->textures.south},
-		{"EA", &game->map->textures.east},
-		{"WE", &game->map->textures.west},
-		{"DO", &game->map->textures.door}
-	};
-	int					i;
+	mlx_texture_t	**texture_ptr;
 
-	i = 0;
-	while (i < 5)
-	{
-		if (ft_strncmp(identifier, texture_map[i].identifier, 3) == 0)
-			return (load_texture(path, texture_map[i].texture_ptr, identifier));
-		i++;
-	}
-	return (0); 
+	texture_ptr = get_texture_ptr_by_id(game, identifier);
+	if (texture_ptr)
+		return (load_texture(path, texture_ptr, identifier));
+	return (0); // Unknown identifier, ignore
 }
 
 int	parse_textures(t_game *game, char *line)

@@ -3,30 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr      */
+/*   Updated: 2025/10/17 14:51:04 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-/* BONUS FEATURE DISABLED - door coordinates struct not needed for non-bonus */
-/*
-typedef struct s_door_coords
+void	on_close(void *param)
 {
-	double	ray_x;
-	double	ray_y;
-	double	ray_dir_x;
-	double	ray_dir_y;
-	double	check_x;
-	double	check_y;
-	int		map_x;
-	int		map_y;
-	int		found;
-}	t_door_coords;
-*/
+    t_game *game = (t_game *)param;
+
+    printf("DEBUG: on_close called!\n");
+	if (game == NULL)
+		printf("DEBUG: on_close - game is NULL!\n");
+    fprintf(stderr, "DEBUG: on_close - starting cleanup (map=%p, textures=%p)\n",
+            (void *)game->map, (void *)game->textures);
+
+    printf("DEBUG: About to call clean_textures...\n");
+    fflush(stdout);
+    clean_textures(game);
+    printf("DEBUG: clean_textures returned!\n");
+    fflush(stdout);
+    if (game->player)
+    {
+        fprintf(stderr, "DEBUG: Freeing player\n");
+        free(game->player);
+        game->player = NULL;
+    }
+
+    fprintf(stderr, "DEBUG: on_close finished cleanup!\n");
+    fflush(stderr);
+}
+
 
 /**
  * Handle special key interactions (doors and quick actions)
@@ -39,20 +50,9 @@ typedef struct s_door_coords
  */
 static void	handle_special_keys(t_game *game, int key)
 {
-	/* BONUS FEATURE DISABLED - door interaction */
-	// if (key == MLX_KEY_SPACE)
-	// {
-	//     // Door interaction logic removed for non-bonus version
-	//     // Space bar does nothing in non-bonus version
-	// }
 	
 	if (key == MLX_KEY_R)
 	{
-		/* BONUS FEATURE DISABLED - weapon reload */
-		// if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT_SHIFT) || 
-		//     mlx_is_key_down(game->mlx, MLX_KEY_RIGHT_SHIFT))
-		//     reload_weapon(game);
-		// else
 		rotate_player(game, 3.14159);  // Just do quick turn for non-bonus
 	}
 }
@@ -71,24 +71,16 @@ void	handle_keyboard(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 	
 	game = (t_game *)param;
-	/* BONUS FEATURE DISABLED FOR NON-BONUS VERSION */
-	// if (game->game_over)
-	// {
-	//     handle_game_over_input(game, keydata);
-	//     return;
-	// }
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
+		fprintf(stderr, "DEBUG: ESC key pressed - cleaning up and exiting\n");
+		cleanup_game(game);
 		mlx_close_window(game->mlx);
-		return ;
 	}
 	if (keydata.action == MLX_PRESS)
 	{
 		if (keydata.key == MLX_KEY_SPACE || keydata.key == MLX_KEY_R)
 			handle_special_keys(game, keydata.key);
-		/* BONUS FEATURE DISABLED - shooting */
-		// else if (keydata.key == MLX_KEY_ENTER)
-		//     enhanced_shoot_weapon(game);
 	}
 }
 
@@ -135,12 +127,4 @@ static void	handle_movement_rotation(t_game *game)
 void	handle_continuous_input(t_game *game)
 {
 	handle_movement_rotation(game);
-	
-	/* BONUS FEATURES DISABLED FOR NON-BONUS VERSION */
-	// if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT_CONTROL) || 
-	//     mlx_is_key_down(game->mlx, MLX_KEY_RIGHT_CONTROL))
-	// {
-	//     if (!game->player->weapon.is_shooting)
-	//         enhanced_shoot_weapon(game);
-	// }
 }

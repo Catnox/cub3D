@@ -47,14 +47,6 @@ void	perform_dda(t_ray *ray, t_game *game)
 		// Check if ray hit a wall
 		if (game->map->grid[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
-		
-		/* BONUS FEATURE DISABLED - doors */
-		// else if (game->map->grid[ray->map_y][ray->map_x] == 'D')
-		// {
-		//     t_door *door = find_door(game, ray->map_x, ray->map_y);
-		//     if (door && door->open_state < 0.8)
-		//         ray->hit = 1;
-		// }
 	}
 	
 	// Calculate distance correctly using player position

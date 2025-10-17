@@ -48,3 +48,11 @@ double	normalize_angle(double angle)
 		angle -= 2 * M_PI;
 	return (angle);
 }
+
+
+int error_exit_init(t_game *game, char *msg)
+{
+    ft_putendl_fd(msg, 2);
+    cleanup_game(game);
+    return 1;
+}

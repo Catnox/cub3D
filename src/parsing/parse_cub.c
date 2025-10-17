@@ -189,11 +189,11 @@ int	parse_cub_file(t_game *game, char *filename)
 	while (lines[i])
 	{
 		if (parse_textures(game, lines[i]) != 0 || parse_colors(game, lines[i]) != 0)
-			return (free_lines(lines), 1);
+			return (free_lines(lines), cleanup_game(game), 1);
 		i++;
 	}
 	if (parse_map(game, lines) != 0)
-		return (free_lines(lines), 1);
+		return (free_lines(lines), cleanup_game(game), 1);
 	free_lines(lines);
 	return (validate_map(game->map));
 }

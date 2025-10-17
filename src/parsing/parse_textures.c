@@ -32,8 +32,6 @@ static mlx_texture_t	**get_texture_ptr_by_id(t_game *game, char *identifier)
 		return (&game->map->textures.east);
 	else if (ft_strncmp(identifier, "WE", 2) == 0)
 		return (&game->map->textures.west);
-	else if (ft_strncmp(identifier, "DO", 2) == 0)
-		return (&game->map->textures.door);
 	return (NULL);
 }
 
@@ -76,7 +74,7 @@ static int	process_texture_line(t_game *game, char *identifier, char *path)
 	texture_ptr = get_texture_ptr_by_id(game, identifier);
 	if (texture_ptr)
 		return (load_texture(path, texture_ptr, identifier));
-	return (0); // Unknown identifier, ignore
+	return (0);
 }
 
 int	parse_textures(t_game *game, char *line)

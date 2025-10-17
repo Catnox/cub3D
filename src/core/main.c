@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr      */
+/*   Updated: 2025/10/17 14:29:36 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,26 @@
  */
 int	main(int argc, char **argv)
 {
-	t_game	game;
+	t_game	*game;
 
+	game = malloc(sizeof(t_game));
+	if (!game)
+		return (1);
 	if (argc != 2)
 	{
 		ft_putendl_fd("Usage: ./cub3D <map.cub>", 2);
 		return (1);
 	}
-	if (init_game(&game, argv[1]) != 0)
+	if (init_game(game, argv[1]) != 0)
 	{
-		cleanup_game(&game);
+		cleanup_game(game);
 		return (1);
 	}
-	game_loop(&game);
-	cleanup_game(&game);
+	game_loop(game);
+	// mlx_loop() returns after window is closed
+    printf("DEBUG: mlx_loop ended, now terminating MLX\n");
+    mlx_terminate(game->mlx);
+    free(game);
+    printf("DEBUG: full cleanup done\n");
 	return (0);
 }

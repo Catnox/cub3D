@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+         #
+#    By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/08/30 15:30:00 by radubos          ###   ########.fr        #
+#    Updated: 2025/10/17 12:16:55 by mknoll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,8 @@ MLX42 = $(MLX42DIR)/build/libmlx42.a
 # Includes
 INCLUDES = -I$(INCDIR) -I$(LIBFTDIR) -I$(MLX42DIR)/include
 
-# MLX42 flags (pour macOS)
-MLX_FLAGS = -framework Cocoa -framework OpenGL -framework IOKit -L/opt/homebrew/lib -lglfw
+# MLX42 flags (pour Linux)
+MLX_FLAGS = -ldl -lglfw -pthread -lm
 
 all: $(NAME)
 

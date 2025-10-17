@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr      */
+/*   Updated: 2025/10/17 13:57:04 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,6 @@ int init_game_state_n_MLX(t_game *game)
 }
 
 /**
- * Initialize basic player data (NON-BONUS VERSION)
- * 
- * For the non-bonus version, this function is simplified and only ensures
- * the player structure exists. Player position and direction are handled
- * in find_player_position(). Bonus features like HP, ammo, score removed.
- * 
- * @param game Pointer to the main game structure containing player data
- * @return 0 on success, 1 if game or player is NULL
- */
-int init_player_stats(t_game *game)
-{
-	if (!game || !game->player)
-		return (1);
-	
-	/* BONUS FEATURES - COMMENTED OUT FOR NON-BONUS VERSION */
-	// game->player->max_hp = 100;
-	// game->player->hp = game->player->max_hp;
-	// game->player->max_ammo = 100;
-	// game->player->ammo = game->player->max_ammo;
-	// game->player->score = 0;
-	// game->player->keys = 0;
-	
-	/* For non-bonus version, only basic player setup is needed */
-	/* Position and direction are set in find_player_position() */
-	
-	return (0);
-}
-
-/**
  * Master initialization function for the entire game (NON-BONUS VERSION)
  * 
  * This function orchestrates the complete initialization process of the cub3D game.
@@ -86,27 +57,14 @@ int init_player_stats(t_game *game)
  */
 int	init_game(t_game *game, char *map_file)
 {
-	ft_memset(game, 0, sizeof(t_game));
 	if (init_game_state_n_MLX(game) != 0)
-		return (1);
+		return (error_exit_init(game, "Failed to initialize game state and MLX42"));
 	if (parse_cub_file(game, map_file) != 0)
-		return (1);
+		return (error_exit_init(game, "Failed to parse .cub file"));
 	if (find_player_position(game) != 0)
-		return (1);
-	if (init_player_stats(game) != 0)
-		return (1);
+		return (error_exit_init(game, "Failed to find player position"));
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
-		return (error_exit("Failed to display image"), 1);
-	
-	/* BONUS FEATURES - COMMENTED OUT FOR NON-BONUS VERSION */
-	// init_doors(game);
-	// if (!init_hud(game))
-	//     return (error_exit("Failed to initialize HUD"), 1);
-	// if (!init_weapon(game))
-	//     return (error_exit("Failed to initialize weapon"), 1);
-	// if (!init_enemies(game))
-	//     return (error_exit("Failed to initialize enemies"), 1);
-	
+		return (error_exit_init(game, "Failed to display image"));
 	game->is_running = 1;
 	return (0);
 }

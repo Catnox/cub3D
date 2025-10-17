@@ -23,8 +23,6 @@ void	render_frame(t_game *game)
 	// Cast rays and draw walls
 	cast_rays(game);
 	
-	/* BONUS FEATURE DISABLED - minimap */
-	// draw_minimap(game);
 }
 
 void	draw_floor_ceiling(t_game *game)
@@ -79,14 +77,7 @@ void	draw_walls(t_game *game, int x, t_ray *ray)
 	draw_end = line_height / 2 + WINDOW_HEIGHT / 2;
 	if (draw_end >= WINDOW_HEIGHT)
 		draw_end = WINDOW_HEIGHT - 1;
-	
-	// Get appropriate texture based on wall direction
-	if (game->map->grid[ray->map_y][ray->map_x] == 'D')
-	{
-		// It's a door, use door texture
-		texture = game->map->textures.door;
-	}
-	else if (ray->side == 0) // North-South wall
+	if (ray->side == 0) // North-South wall
 	{
 		if (ray->step_x > 0)
 			texture = game->map->textures.east; // East wall

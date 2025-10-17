@@ -1,2 +1,0 @@
-DEBUG: on_close called!
-DEBUG: game pointer is valid

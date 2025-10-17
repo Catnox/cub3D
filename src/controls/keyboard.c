@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/17 14:51:04 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/17 15:07:57 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,8 @@ void	on_close(void *param)
 {
     t_game *game = (t_game *)param;
 
-    printf("DEBUG: on_close called!\n");
-	if (game == NULL)
-		printf("DEBUG: on_close - game is NULL!\n");
-    fprintf(stderr, "DEBUG: on_close - starting cleanup (map=%p, textures=%p)\n",
-            (void *)game->map, (void *)game->textures);
-
-    printf("DEBUG: About to call clean_textures...\n");
-    fflush(stdout);
-    clean_textures(game);
-    printf("DEBUG: clean_textures returned!\n");
-    fflush(stdout);
-    if (game->player)
-    {
-        fprintf(stderr, "DEBUG: Freeing player\n");
-        free(game->player);
-        game->player = NULL;
-    }
-
-    fprintf(stderr, "DEBUG: on_close finished cleanup!\n");
-    fflush(stderr);
+    cleanup_game(game);
+	exit(1);
 }
 
 
@@ -75,7 +57,7 @@ void	handle_keyboard(mlx_key_data_t keydata, void *param)
 	{
 		fprintf(stderr, "DEBUG: ESC key pressed - cleaning up and exiting\n");
 		cleanup_game(game);
-		mlx_close_window(game->mlx);
+		exit(0);
 	}
 	if (keydata.action == MLX_PRESS)
 	{

@@ -6,7 +6,7 @@
 #    By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/10/17 12:16:55 by mknoll           ###   ########.fr        #
+#    Updated: 2025/10/17 15:00:29 by mknoll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ OBJDIR = obj
 # Source files (NON-BONUS VERSION)
 SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/core/init.c \
-       $(SRCDIR)/core/cleanup.c \
        $(SRCDIR)/core/game_loop.c \
        $(SRCDIR)/parsing/parse_cub.c \
        $(SRCDIR)/parsing/parse_map.c \

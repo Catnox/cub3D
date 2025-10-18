@@ -40,19 +40,9 @@ int	is_valid_map_char(char c)
 			c == 'E' || c == 'W' || c == ' ' || c == 'D' || c == 'G');
 }
 
-double	normalize_angle(double angle)
-{
-	while (angle < 0)
-		angle += 2 * M_PI;
-	while (angle >= 2 * M_PI)
-		angle -= 2 * M_PI;
-	return (angle);
-}
-
-
 int error_exit_init(t_game *game, char *msg)
 {
+	(void)game;	
     ft_putendl_fd(msg, 2);
-    cleanup_game(game);
     return 1;
 }

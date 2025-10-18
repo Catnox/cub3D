@@ -6,7 +6,7 @@
 #    By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/10/17 15:00:29 by mknoll           ###   ########.fr        #
+#    Updated: 2025/10/18 11:34:41 by mknoll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,20 +36,8 @@ SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/rendering/render.c \
        $(SRCDIR)/controls/keyboard.c \
        $(SRCDIR)/controls/movements.c \
-       $(SRCDIR)/utils/utils.c
-
-# BONUS FILES - COMMENTED OUT FOR NON-BONUS VERSION
-#       $(SRCDIR)/rendering/minimap.c \
-#       $(SRCDIR)/controls/mouse.c \
-#       $(SRCDIR)/game/doors.c \
-#       $(SRCDIR)/gameplay/hud.c \
-#       $(SRCDIR)/gameplay/hud_draw.c \
-#       $(SRCDIR)/gameplay/weapon.c \
-#       $(SRCDIR)/gameplay/shooting.c \
-#       $(SRCDIR)/gameplay/enemies.c \
-#       $(SRCDIR)/gameplay/enemy_render.c \
-#       $(SRCDIR)/gameplay/pathfinding.c \
-#       $(SRCDIR)/gameplay/game_over.c
+       $(SRCDIR)/utils/utils.c \
+       $(SRCDIR)/utils/cleanup.c \
 
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

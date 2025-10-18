@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 15:08:45 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/17 15:08:48 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/18 14:13:22 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,72 +15,47 @@
 
 void clean_map(t_game *game)
 {
-	printf("DEBUG: clean_map called\n");
+	printf("Cleaning up map...\n");
 	if (!game || !game->map)
-	{
-		printf("DEBUG: clean_map - game or game->map is NULL\n");
 		return ;
-	}
-	printf("DEBUG: clean_map - freeing grid\n");
 	if (game->map->grid)
 		free_split(game->map->grid);
-	printf("DEBUG: clean_map - freeing map structure\n");
 	free(game->map);
 	game->map = NULL;
-	printf("DEBUG: clean_map finished\n");
 }
 
 void	clean_textures(t_game *game)
 {
-	printf("DEBUG: clean_textures called (game=%p, game->map=%p)\n",
-           (void *)game, (void *)game->map);
-    fflush(stdout);
 	if (!game)
 		return ;
-	
-	printf("DEBUG: clean_textures called\n");
-	fflush(stdout);
-	
-	/* Clean textures from game->map->textures (where they're actually loaded) */
 	if (game->map)
 	{
-		printf("DEBUG: game->map exists\n");
-		fflush(stdout);
 		if (game->map->textures.north)
 		{
-			printf("DEBUG: Deleting north texture\n");
-			fflush(stdout);
 			mlx_delete_texture(game->map->textures.north);
 			game->map->textures.north = NULL;
 		}
 		if (game->map->textures.south)
 		{
-			printf("DEBUG: Deleting south texture\n");
 			mlx_delete_texture(game->map->textures.south);
 			game->map->textures.south = NULL;
 		}
 		if (game->map->textures.east)
 		{
-			printf("DEBUG: Deleting east texture\n");
 			mlx_delete_texture(game->map->textures.east);
 			game->map->textures.east = NULL;
 		}
 		if (game->map->textures.west)
 		{
-			printf("DEBUG: Deleting west texture\n");
 			mlx_delete_texture(game->map->textures.west);
 			game->map->textures.west = NULL;
 		}
 	}
-
-	/* Free game->textures structure (allocated but unused) */
 	if (game->textures)
 	{
-		printf("DEBUG: Freeing game->textures structure\n");
 		free(game->textures);
 		game->textures = NULL;
 	}
-	printf("DEBUG: clean_textures finished\n");
 }
 
 
@@ -102,12 +77,18 @@ void	clean_textures(t_game *game)
  */
 void cleanup_game(t_game *game)
 {
-    printf("Cleaning up game...\n");
-
-    clean_textures(game);
-	clean_map(game);
-    printf("Terminating MLX...\n");
+	if (game->map)
+	{
+    	clean_textures(game);
+		clean_map(game);
+	}
+	if (game->player)
+	{
+		free(game->player);
+		game->player = NULL;
+	}
     if (game->mlx)
+	{
         mlx_terminate(game->mlx);
-    printf("Cleanup done!\n");
+	}
 }

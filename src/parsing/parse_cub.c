@@ -6,11 +6,37 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:32:59 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:02:32 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/**
+ * Validate that all required elements are present
+ * 
+ * Checks that all 4 textures (NO, SO, WE, EA) and both colors (F, C)
+ * have been successfully parsed and are available.
+ * 
+ * @param game Pointer to game structure
+ * @return 0 if all elements present, 1 if missing elements
+ */
+static int	validate_required_elements(t_game *game)
+{
+	if (!game->map->textures.north)
+		return (error_exit("Missing north texture (NO)"), 1);
+	if (!game->map->textures.south)
+		return (error_exit("Missing south texture (SO)"), 1);
+	if (!game->map->textures.west)
+		return (error_exit("Missing west texture (WE)"), 1);
+	if (!game->map->textures.east)
+		return (error_exit("Missing east texture (EA)"), 1);
+	if (game->map->floor_color.r == -1)
+		return (error_exit("Missing floor color (F)"), 1);
+	if (game->map->ceiling_color.r == -1)
+		return (error_exit("Missing ceiling color (C)"), 1);
+	return (0);
+}
 
 static int	allocate_game_structures(t_game *game)
 {
@@ -27,6 +53,8 @@ static int	allocate_game_structures(t_game *game)
 			free(game->textures);
 		return (1);
 	}
+	game->map->floor_color.r = -1;
+	game->map->ceiling_color.r = -1;
 	return (0);
 }
 
@@ -53,9 +81,9 @@ int	parse_cub_file(t_game *game, char *filename)
 		return (1);
 	lines = open_and_read_file(filename);
 	if (!lines)
-		return (printf("DEBUG: Failed to read file\n"), 1);
+		return (1);
 	if (allocate_game_structures(game) != 0)
-		return (free_lines(lines), error_exit("Memory allocation failed"), 1);
+		return (free_lines(lines), 1);
 	i = 0;
 	while (lines[i])
 	{
@@ -67,5 +95,7 @@ int	parse_cub_file(t_game *game, char *filename)
 	if (parse_map(game, lines) != 0)
 		return (free_lines(lines), 1);
 	free_lines(lines);
+	if (validate_required_elements(game) != 0)
+		return (1);
 	return (validate_map(game->map));
 }

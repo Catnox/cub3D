@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:30:00 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/20 10:57:02 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 12:18:41 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	validate_cub_extension(char *filename)
 
 	len = ft_strlen(filename);
 	if (len < 4 || ft_strncmp(filename + len - 4, ".cub", 4) != 0)
-		return (error_exit("Invalid file extension. Expected .cub"), 1);
+		return (1);
 	return (0);
 }
 

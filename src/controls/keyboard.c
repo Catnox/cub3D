@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:34:17 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:13:40 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,6 @@ void	on_close(void *param)
 	game = (t_game *)param;
 	cleanup_game(game);
 	exit(1);
-}
-
-/**
- * Handle special key interactions (doors and quick actions)
- * 
- * Processes space bar for door interaction and R key for reload/quick turn.
- * Uses raycasting first, then adjacent check for doors.
- * 
- * @param game Pointer to game structure
- * @param key The key that was pressed
- */
-static void	handle_special_keys(t_game *game, int key)
-{
-	if (key == MLX_KEY_R)
-		rotate_player(game, 3.14159);
 }
 
 /**
@@ -55,18 +40,13 @@ void	handle_keyboard(mlx_key_data_t keydata, void *param)
 		cleanup_game(game);
 		exit(0);
 	}
-	if (keydata.action == MLX_PRESS)
-	{
-		if (keydata.key == MLX_KEY_SPACE || keydata.key == MLX_KEY_R)
-			handle_special_keys(game, keydata.key);
-	}
 }
 
 /**
  * Handle continuous movement and rotation input
  * 
  * Processes keys that can be held down for continuous movement/rotation.
- * Includes WASD movement, arrow key movement/rotation, and Q/E fast rotation.
+ * Includes WASD movement, arrow key rotation, and Q/E fast rotation.
  * 
  * @param game Pointer to game structure
  */
@@ -80,10 +60,6 @@ static void	handle_movement_rotation(t_game *game)
 		move_player(game, 2);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
 		move_player(game, 3);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
-		move_player(game, 1);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
-		move_player(game, -1);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 		rotate_player(game, -ROT_SPEED);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))

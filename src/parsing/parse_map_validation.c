@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:30:00 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/20 10:56:59 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 12:45:04 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,18 @@ int	validate_map_line(char *line, int width)
 
 int	allocate_map_grid(t_game *game, int height, int width)
 {
+	int	i;
+
 	game->map->height = height;
 	game->map->width = width;
 	game->map->grid = malloc(sizeof(char *) * (height + 1));
 	if (!game->map->grid)
 		return (error_exit("Memory allocation failed"), 1);
+	i = 0;
+	while (i <= height)
+	{
+		game->map->grid[i] = NULL;
+		i++;
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:13:33 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:03:34 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,14 @@ static int	load_texture(char *path, mlx_texture_t **texture_ptr, char *id)
 {
 	mlx_texture_t	*texture;
 
-	printf("Trying to load %s texture: '%s'\n", id, path);
+	(void)id;
 	texture = mlx_load_png(path);
 	if (texture)
 	{
 		*texture_ptr = texture;
-		printf("Texture %s: %s loaded successfully\n", id, path);
 		return (0);
 	}
-	printf("Texture %s: %s failed to load\n", id, path);
-	return (1);
+	return (error_exit("Failed to load texture file"), 1);
 }
 
 /**

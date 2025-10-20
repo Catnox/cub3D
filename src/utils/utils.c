@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:06:12 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:00:26 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error_exit(char *message)
 {
-	ft_putstr_fd("Error\n", 2);
+	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(message, 2);
 }
 
@@ -36,12 +36,12 @@ void	free_split(char **split)
 int	is_valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W' || c == ' ' || c == 'D' || c == 'G');
+		|| c == 'E' || c == 'W' || c == ' ');
 }
 
 int	error_exit_init(t_game *game, char *msg)
 {
 	(void)game;
-	ft_putendl_fd(msg, 2);
+	(void)msg;
 	return (1);
 }

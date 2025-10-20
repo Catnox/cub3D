@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:47:52 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:12:21 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
  then casts rays to render walls. */
 void	render_frame(t_game *game)
 {
-	ft_memset(game->img->pixels, 0, WINDOW_WIDTH * WINDOW_HEIGHT * sizeof(int));
+	ft_memset(game->img->pixels, 0,
+		game->img->width * game->img->height * sizeof(int));
 	draw_floor_ceiling(game);
 	cast_rays(game);
 }
@@ -39,12 +40,12 @@ void	draw_floor_ceiling(t_game *game)
 		| (game->map->ceiling_color.g << 16)
 		| (game->map->ceiling_color.b << 8) | game->map->ceiling_color.a;
 	y = 0;
-	while (y < WINDOW_HEIGHT)
+	while (y < (int)game->img->height)
 	{
 		x = 0;
-		while (x < WINDOW_WIDTH)
+		while (x < (int)game->img->width)
 		{
-			if (y < WINDOW_HEIGHT / 2)
+			if (y < (int)game->img->height / 2)
 				mlx_put_pixel(game->img, x, y, ceiling_color);
 			else
 				mlx_put_pixel(game->img, x, y, floor_color);
@@ -57,16 +58,19 @@ void	draw_floor_ceiling(t_game *game)
 /* Calculates the drawing boundaries for a wall stripe based on ray distance.
  * Determines the height of the wall on screen and the start/end pixel positions.
  * Clamps the values to stay within the window boundaries. */
-void	calculate_draw_bounds(t_ray *ray, int *line_height,
-		int *draw_start, int *draw_end)
+void	calculate_draw_bounds(t_ray *ray, t_draw_bounds_params *params,
+		t_game *game)
 {
-	*line_height = (int)(WINDOW_HEIGHT / ray->perp_wall_dist);
-	*draw_start = -*line_height / 2 + WINDOW_HEIGHT / 2;
-	if (*draw_start < 0)
-		*draw_start = 0;
-	*draw_end = *line_height / 2 + WINDOW_HEIGHT / 2;
-	if (*draw_end >= WINDOW_HEIGHT)
-		*draw_end = WINDOW_HEIGHT - 1;
+	int	window_height;
+
+	window_height = (int)game->img->height;
+	*(params->line_height) = (int)(window_height / ray->perp_wall_dist);
+	*(params->draw_start) = -*(params->line_height) / 2 + window_height / 2;
+	if (*(params->draw_start) < 0)
+		*(params->draw_start) = 0;
+	*(params->draw_end) = *(params->line_height) / 2 + window_height / 2;
+	if (*(params->draw_end) >= window_height)
+		*(params->draw_end) = window_height - 1;
 }
 
 /* Determines which texture to use based on the wall direction.
@@ -101,7 +105,8 @@ void	draw_walls(t_game *game, int x, t_ray *ray)
 	mlx_texture_t		*texture;
 	t_wall_draw_params	params;
 
-	calculate_draw_bounds(ray, &line_height, &draw_start, &draw_end);
+	calculate_draw_bounds(ray, &(t_draw_bounds_params){&line_height,
+		&draw_start, &draw_end}, game);
 	texture = get_wall_texture(game, ray);
 	params.x = x;
 	params.line_height = line_height;

@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:18:49 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 12:46:09 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (argc != 2)
 	{
+		printf("Error\n");
 		ft_putendl_fd("Usage: ./cub3D <map.cub>", 2);
 		return (free(game), 1);
 	}
@@ -39,7 +40,6 @@ int	main(int argc, char **argv)
 	{
 		cleanup_game(game);
 		free(game);
-		printf("DEBUG: cleanup done after init failure\n");
 		return (1);
 	}
 	game_loop(game);

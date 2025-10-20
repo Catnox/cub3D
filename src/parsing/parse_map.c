@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:32:40 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 12:23:56 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,5 @@ int	parse_map(t_game *game, char **lines)
 		return (1);
 	if (copy_map_lines(game, lines, params) != 0)
 		return (1);
-	printf("Map parsed: %dx%d\n", params.width, params.height);
 	return (0);
 }

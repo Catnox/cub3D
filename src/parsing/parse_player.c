@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:42:38 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:00:27 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ int	find_player_position(t_game *game)
 		}
 	}
 	if (!player_found)
-		return (ft_putendl_fd("Error: No player position found in map", 2), 1);
+		return (error_exit("No player position found in map"), 1);
 	return (0);
 }

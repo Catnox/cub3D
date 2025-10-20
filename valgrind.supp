@@ -19,6 +19,39 @@
 }
 
 {
+   MLX42_GLFW_X11_Init_Leaks
+   Memcheck:Leak
+   match-leak-kinds:reachable
+   fun:malloc
+   fun:XInitThreads
+   fun:glfwInit
+   fun:mlx_init
+   fun:init_game_state_n_mlx
+   fun:init_game
+   fun:main
+}
+
+{
+   X11_System_Leaks
+   Memcheck:Leak
+   match-leak-kinds:reachable
+   fun:malloc
+   ...
+   obj:*/libX11.so.*
+   fun:glfwInit
+   fun:mlx_init
+}
+
+{
+   GLFW_System_Leaks
+   Memcheck:Leak
+   match-leak-kinds:reachable
+   fun:malloc
+   ...
+   obj:*/libglfw.so.*
+}
+
+{
    <insert_a_suppression_name_here>
    Memcheck:Addr8
    fun:strncmp

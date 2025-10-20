@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 15:08:45 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/20 10:47:10 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 12:22:20 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	clean_map(t_game *game)
 {
-	printf("Cleaning up map...\n");
 	if (!game || !game->map)
 		return ;
 	if (game->map->grid)

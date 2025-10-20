@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:12:59 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:04:18 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 /* Calculates the ray direction based on camera position and screen x coordinate
  * Converts screen pixel position to world ray direction using camera plane. */
-static void	calculate_ray_direction(t_ray *ray, t_player *player, int x)
+static void	calculate_ray_direction(t_ray *ray, t_player *player,
+		int x, t_game *game)
 {
 	double	camera_x;
 
-	camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
+	camera_x = 2 * x / (double)game->img->width - 1;
 	ray->dir.x = player->dir.x + player->plane.x * camera_x;
 	ray->dir.y = player->dir.y + player->plane.y * camera_x;
 }
@@ -70,9 +71,9 @@ static void	calculate_step_and_side_dist(t_ray *ray, t_player *player)
 /* Initializes a ray for raycasting at a given screen x coordinate.
  * Sets up all necessary parameters for the DDA algorithm including direction,
  * position, delta distances, and step values. */
-void	init_ray(t_ray *ray, t_player *player, int x)
+void	init_ray(t_ray *ray, t_player *player, int x, t_game *game)
 {
-	calculate_ray_direction(ray, player, x);
+	calculate_ray_direction(ray, player, x, game);
 	ray->map_x = (int)player->pos.x;
 	ray->map_y = (int)player->pos.y;
 	calculate_delta_distances(ray);
@@ -89,9 +90,9 @@ void	cast_rays(t_game *game)
 	int		x;
 
 	x = 0;
-	while (x < WINDOW_WIDTH)
+	while (x < (int)game->img->width)
 	{
-		init_ray(&ray, game->player, x);
+		init_ray(&ray, game->player, x, game);
 		perform_dda(&ray, game);
 		draw_walls(game, x, &ray);
 		x++;

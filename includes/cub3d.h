@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:58:27 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:08:24 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,13 @@ typedef struct s_wall_draw_params
 	mlx_texture_t	*texture;
 }	t_wall_draw_params;
 
+typedef struct s_draw_bounds_params
+{
+	int				*line_height;
+	int				*draw_start;
+	int				*draw_end;
+}	t_draw_bounds_params;
+
 /* Core functions */
 int		init_game(t_game *game, char *map_file);
 void	cleanup_game(t_game *game);
@@ -195,12 +202,14 @@ void	set_player_direction(t_player *player, char dir);
 
 /* Raycasting functions */
 void	cast_rays(t_game *game);
-void	init_ray(t_ray *ray, t_player *player, int x);
+void	init_ray(t_ray *ray, t_player *player, int x, t_game *game);
 void	perform_dda(t_ray *ray, t_game *game);
 double	calculate_distance(t_ray *ray, t_player *player);
 
 /* Rendering functions */
 void	render_frame(t_game *game);
+void	calculate_draw_bounds(t_ray *ray, t_draw_bounds_params *params,
+			t_game *game);
 void	draw_walls(t_game *game, int x, t_ray *ray);
 void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params);
 void	draw_textured_wall(t_game *game, t_ray *ray,

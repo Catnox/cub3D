@@ -10,22 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "includes/cub3d.h"
 
-void	init_ray(t_ray *ray, t_player *player, int x)
+/* Calculates the ray direction based on camera position and screen x coordinate.
+ * Converts screen pixel position to world ray direction using camera plane. */
+static void	calculate_ray_direction(t_ray *ray, t_player *player, int x)
 {
 	double	camera_x;
 	
-	// Calculate ray direction
 	camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
 	ray->dir.x = player->dir.x + player->plane.x * camera_x;
 	ray->dir.y = player->dir.y + player->plane.y * camera_x;
-	
-	// Current position
-	ray->map_x = (int)player->pos.x;
-	ray->map_y = (int)player->pos.y;
-	
-	// Calculate delta distances
+}
+
+/* Calculates delta distances for DDA algorithm.
+ * Delta distance represents the distance the ray travels for one unit in x or y direction. */
+static void	calculate_delta_distances(t_ray *ray)
+{
 	if (ray->dir.x == 0)
 		ray->delta_dist.x = 1e30;
 	else
@@ -34,8 +35,12 @@ void	init_ray(t_ray *ray, t_player *player, int x)
 		ray->delta_dist.y = 1e30;
 	else
 		ray->delta_dist.y = fabs(1 / ray->dir.y);
-	
-	// Calculate step and initial side_dist
+}
+
+/* Calculates step directions and initial side distances for DDA.
+ * Determines which direction to step in the grid and the distance to the next grid line. */
+static void	calculate_step_and_side_dist(t_ray *ray, t_player *player)
+{
 	if (ray->dir.x < 0)
 	{
 		ray->step_x = -1;
@@ -56,10 +61,26 @@ void	init_ray(t_ray *ray, t_player *player, int x)
 		ray->step_y = 1;
 		ray->side_dist.y = (ray->map_y + 1.0 - player->pos.y) * ray->delta_dist.y;
 	}
+}
+
+/* Initializes a ray for raycasting at a given screen x coordinate.
+ * Sets up all necessary parameters for the DDA algorithm including direction,
+ * position, delta distances, and step values. */
+void	init_ray(t_ray *ray, t_player *player, int x)
+{
+	calculate_ray_direction(ray, player, x);
+	
+	ray->map_x = (int)player->pos.x;
+	ray->map_y = (int)player->pos.y;
+	
+	calculate_delta_distances(ray);
+	calculate_step_and_side_dist(ray, player);
 	
 	ray->hit = 0;
 }
 
+/* Main raycasting function that renders the entire screen.
+ * Casts one ray for each screen column, performs DDA, and draws the resulting walls. */
 void	cast_rays(t_game *game)
 {
 	t_ray	ray;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "includes/cub3d.h"
 
 
 void clean_map(t_game *game)

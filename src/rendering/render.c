@@ -10,21 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
+/* Main rendering function that draws a complete frame.
+ * Clears the image buffer, draws floor and ceiling, then casts rays to render walls. */
 void	render_frame(t_game *game)
 {
-	// Clear image
 	ft_memset(game->img->pixels, 0, WINDOW_WIDTH * WINDOW_HEIGHT * sizeof(int));
-	
-	// Draw floor and ceiling
 	draw_floor_ceiling(game);
-	
-	// Cast rays and draw walls
-	cast_rays(game);
-	
+	cast_rays(game);	
 }
 
+/* Draws the floor and ceiling as solid colored horizontal areas.
+ * The upper half of the screen is filled with ceiling color,
+ * the lower half with floor color based on map configuration. */
 void	draw_floor_ceiling(t_game *game)
 {
 	int	x;
@@ -32,7 +31,6 @@ void	draw_floor_ceiling(t_game *game)
 	int	floor_color;
 	int	ceiling_color;
 	
-	// Convert colors to RGBA format for MLX42
 	floor_color = (game->map->floor_color.r << 24) | (game->map->floor_color.g << 16) | 
 				  (game->map->floor_color.b << 8) | game->map->floor_color.a;
 	ceiling_color = (game->map->ceiling_color.r << 24) | (game->map->ceiling_color.g << 16) | 
@@ -54,128 +52,61 @@ void	draw_floor_ceiling(t_game *game)
 	}
 }
 
-void	draw_walls(t_game *game, int x, t_ray *ray)
+/* Calculates the drawing boundaries for a wall stripe based on ray distance.
+ * Determines the height of the wall on screen and the start/end pixel positions.
+ * Clamps the values to stay within the window boundaries. */
+void	calculate_draw_bounds(t_ray *ray, int *line_height, int *draw_start, int *draw_end)
 {
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-	int	y;
-	mlx_texture_t	*texture;
-	int	tex_x;
-	int	tex_y;
-	double	step;
-	double	tex_pos;
-	uint32_t	color;
+	*line_height = (int)(WINDOW_HEIGHT / ray->perp_wall_dist);
 	
-	// Calculate height of line to draw on screen
-	line_height = (int)(WINDOW_HEIGHT / ray->perp_wall_dist);
-	
-	// Calculate lowest and highest pixel to fill in current stripe
-	draw_start = -line_height / 2 + WINDOW_HEIGHT / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = line_height / 2 + WINDOW_HEIGHT / 2;
-	if (draw_end >= WINDOW_HEIGHT)
-		draw_end = WINDOW_HEIGHT - 1;
-	if (ray->side == 0) // North-South wall
+	*draw_start = -*line_height / 2 + WINDOW_HEIGHT / 2;
+	if (*draw_start < 0)
+		*draw_start = 0;
+	*draw_end = *line_height / 2 + WINDOW_HEIGHT / 2;
+	if (*draw_end >= WINDOW_HEIGHT)
+		*draw_end = WINDOW_HEIGHT - 1;
+}
+
+/* Determines which texture to use based on the wall direction.
+ * Returns the appropriate texture (north, south, east, west) depending on
+ * which side of the wall was hit and the ray direction. */
+mlx_texture_t	*get_wall_texture(t_game *game, t_ray *ray)
+{
+	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)
-			texture = game->map->textures.east; // East wall
+			return (game->map->textures.east);
 		else
-			texture = game->map->textures.west; // West wall
+			return (game->map->textures.west);
 	}
-	else // East-West wall
+	else
 	{
 		if (ray->step_y > 0)
-			texture = game->map->textures.south; // South wall
+			return (game->map->textures.south);
 		else
-			texture = game->map->textures.north; // North wall
+			return (game->map->textures.north);
 	}
+}
+
+/* Main wall drawing function that coordinates all wall rendering.
+ * Calculates boundaries, selects textures, and delegates to appropriate drawing functions. */
+void	draw_walls(t_game *game, int x, t_ray *ray)
+{
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	mlx_texture_t	*texture;
+	
+	calculate_draw_bounds(ray, &line_height, &draw_start, &draw_end);
+	texture = get_wall_texture(game, ray);
 	
 	// If no texture loaded, fall back to colored walls
 	if (!texture)
 	{
-		if (ray->side == 0) // North-South wall
-		{
-			if (ray->step_x > 0)
-				color = 0xFF0000FF; // Red for East
-			else
-				color = 0x0000FFFF; // Blue for West
-		}
-		else // East-West wall
-		{
-			if (ray->step_y > 0)
-				color = 0x00FF00FF; // Green for South
-			else
-				color = 0xFFFFFFFF; // White for North
-		}
-		
-		y = draw_start;
-		while (y <= draw_end)
-		{
-			mlx_put_pixel(game->img, x, y, color);
-			y++;
-		}
+		draw_colored_wall(game, x, ray, draw_start, draw_end);
 		return;
 	}
 	
-	// Calculate texture x coordinate
-	double wall_x;
-	if (ray->side == 0)
-		wall_x = game->player->pos.y + ray->perp_wall_dist * ray->dir.y;
-	else
-		wall_x = game->player->pos.x + ray->perp_wall_dist * ray->dir.x;
-	wall_x -= floor(wall_x);
-	
-	tex_x = (int)(wall_x * (double)texture->width);
-	if (ray->side == 0 && ray->dir.x > 0)
-		tex_x = texture->width - tex_x - 1;
-	if (ray->side == 1 && ray->dir.y < 0)
-		tex_x = texture->width - tex_x - 1;
-	
-	// How much to increase the texture coordinate per screen pixel
-	step = 1.0 * texture->height / line_height;
-	
-	// Starting texture coordinate
-	tex_pos = (draw_start - WINDOW_HEIGHT / 2 + line_height / 2) * step;
-	
 	// Draw the wall stripe with texture
-	y = draw_start;
-	while (y <= draw_end)
-	{
-		tex_y = (int)tex_pos & (texture->height - 1);
-		tex_pos += step;
-		
-		// Get pixel color from texture
-		int pixel_index = (tex_y * texture->width + tex_x) * texture->bytes_per_pixel;
-		if (pixel_index >= 0 && pixel_index < (int)(texture->width * texture->height * texture->bytes_per_pixel))
-		{
-			if (texture->bytes_per_pixel == 4) // RGBA
-			{
-				uint8_t r = texture->pixels[pixel_index];
-				uint8_t g = texture->pixels[pixel_index + 1];
-				uint8_t b = texture->pixels[pixel_index + 2];
-				uint8_t a = texture->pixels[pixel_index + 3];
-				color = (r << 24) | (g << 16) | (b << 8) | a;
-			}
-			else if (texture->bytes_per_pixel == 3) // RGB
-			{
-				uint8_t r = texture->pixels[pixel_index];
-				uint8_t g = texture->pixels[pixel_index + 1];
-				uint8_t b = texture->pixels[pixel_index + 2];
-				color = (r << 24) | (g << 16) | (b << 8) | 0xFF;
-			}
-			else
-			{
-				color = 0xFFFFFFFF; // Default white
-			}
-		}
-		else
-		{
-			color = 0xFF00FFFF; // Magenta for debug (out of bounds)
-		}
-		
-		mlx_put_pixel(game->img, x, y, color);
-		y++;
-	}
+	draw_textured_wall(game, x, ray, texture, line_height, draw_start, draw_end);
 }

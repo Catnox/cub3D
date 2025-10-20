@@ -41,6 +41,15 @@ typedef struct s_color
 	int	a;
 }	t_color;
 
+/* Color components for texture processing */
+typedef struct s_color_components
+{
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+	uint8_t	a;
+}	t_color_components;
+
 /* Vector 2D */
 typedef struct s_vec2
 {
@@ -105,12 +114,7 @@ typedef struct s_game
 	int			game_over;
 }	t_game;
 
-/**
- * Structure to hold map parsing parameters
- * 
- * Groups related map parsing information to reduce parameter count
- * and improve code organization.
- */
+/* Structure to hold map parsing parameters */
 typedef struct s_map_params
 {
 	int	start;
@@ -143,7 +147,7 @@ int		init_game(t_game *game, char *map_file);
 void	cleanup_game(t_game *game);
 void	game_loop(t_game *game);
 void	on_close(void *param);
-int error_exit_init(t_game *game, char *msg);
+int		error_exit_init(t_game *game, char *msg);
 
 /* Parsing functions */
 int		parse_cub_file(t_game *game, char *filename);
@@ -181,7 +185,7 @@ void	free_split(char **split);
 int		is_valid_map_char(char c);
 double	normalize_angle(double angle);
 void	clean_textures(t_game *game);
-void clean_map(t_game *game);
+void	clean_map(t_game *game);
 
 /* Game Over functions */
 void	render_game_over_screen(t_game *game);

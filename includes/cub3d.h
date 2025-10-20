@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:58:27 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_map
 	t_texture	textures;
 }	t_map;
 
-
 /* Player */
 typedef struct s_player
 {
@@ -142,6 +141,15 @@ typedef struct s_texture_map
 	mlx_texture_t	**texture_ptr;
 }	t_texture_map;
 
+typedef struct s_wall_draw_params
+{
+	int				x;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	mlx_texture_t	*texture;
+}	t_wall_draw_params;
+
 /* Core functions */
 int		init_game(t_game *game, char *map_file);
 void	cleanup_game(t_game *game);
@@ -158,6 +166,33 @@ int		validate_map(t_map *map);
 int		find_player_position(t_game *game);
 int		is_valid_map_char(char c);
 
+/* File utility functions */
+char	**read_file_lines(int fd);
+int		validate_cub_extension(char *filename);
+char	**open_and_read_file(char *filename);
+
+/* Line utility functions */
+char	**resize_lines_array(char **lines, int *capacity, int count);
+void	process_line(char *line);
+void	free_lines(char **lines);
+
+/* Map parsing utility functions */
+int		find_map_start(char **lines);
+int		get_max_line_width(char **lines, int start, int count);
+int		count_map_lines(char **lines, int map_start);
+
+/* Map validation utility functions */
+int		allocate_map_grid(t_game *game, int height, int width);
+void	copy_and_pad_line(char *dest, char *src, int max_width);
+int		validate_map_line(char *line, int width);
+
+/* Player parsing utility functions */
+void	set_north_direction(t_player *player);
+void	set_south_direction(t_player *player);
+void	set_east_direction(t_player *player);
+void	set_west_direction(t_player *player);
+void	set_player_direction(t_player *player, char dir);
+
 /* Raycasting functions */
 void	cast_rays(t_game *game);
 void	init_ray(t_ray *ray, t_player *player, int x);
@@ -167,6 +202,9 @@ double	calculate_distance(t_ray *ray, t_player *player);
 /* Rendering functions */
 void	render_frame(t_game *game);
 void	draw_walls(t_game *game, int x, t_ray *ray);
+void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params);
+void	draw_textured_wall(t_game *game, t_ray *ray,
+			t_wall_draw_params *params);
 void	draw_floor_ceiling(t_game *game);
 void	draw_minimap(t_game *game);
 void	apply_texture(t_game *game, int x, int y, mlx_texture_t *texture);
@@ -175,9 +213,15 @@ void	apply_texture(t_game *game, int x, int y, mlx_texture_t *texture);
 void	handle_keyboard(mlx_key_data_t keydata, void *param);
 void	handle_continuous_input(t_game *game);
 void	handle_mouse(double xpos, double ypos, void *param);
-void	handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
-void	move_player(t_game *game, int direction);
+void	handle_mouse_click(mouse_key_t button, action_t action,
+			modifier_key_t mods, void *param);
 void	rotate_player(t_game *game, double angle);
+
+/* Movement utility functions */
+int		check_collision(t_game *game, double x, double y);
+int		check_collision_with_buffer(t_game *game, double x, double y);
+t_vec2	calculate_new_position(t_game *game, int direction);
+void	move_player(t_game *game, int direction);
 
 /* Utils functions */
 void	error_exit(char *message);
@@ -194,6 +238,7 @@ void	handle_game_over_input(t_game *game, mlx_key_data_t keydata);
 void	restart_game(t_game *game);
 void	reset_player_position(t_game *game);
 void	draw_simple_game_over(t_game *game, int start_x, int start_y);
-void	draw_simple_message(t_game *game, int start_x, int start_y, const char *message);
+void	draw_simple_message(t_game *game, int start_x,
+			int start_y, const char *message);
 
 #endif

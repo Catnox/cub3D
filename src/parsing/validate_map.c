@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:33:10 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	validate_map(t_map *map)
 	int	player_count;
 	int	i;
 	int	j;
-	
+
 	if (!map->grid)
 		return (error_exit("No map data"), 1);
 	player_count = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:47:21 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /* Calculates the X coordinate in the texture for the current wall stripe.
  * Determines the exact position on the wall where the ray hit and maps it
- * to the corresponding texture column. Handles texture flipping for correct orientation. */
+ * to the corresponding texture column. Handles texture flipping 
+ * for correct orientation. */
 int	calculate_texture_x(t_game *game, t_ray *ray, mlx_texture_t *texture)
 {
 	double	wall_x;
@@ -25,19 +26,17 @@ int	calculate_texture_x(t_game *game, t_ray *ray, mlx_texture_t *texture)
 	else
 		wall_x = game->player->pos.x + ray->perp_wall_dist * ray->dir.x;
 	wall_x -= floor(wall_x);
-	
 	tex_x = (int)(wall_x * (double)texture->width);
 	if (ray->side == 0 && ray->dir.x > 0)
 		tex_x = texture->width - tex_x - 1;
 	if (ray->side == 1 && ray->dir.y < 0)
 		tex_x = texture->width - tex_x - 1;
-	
 	return (tex_x);
 }
 
 /* Initializes color components from texture pixels at given index.
  * Extracts RGBA values from texture data for both RGB and RGBA formats. */
-void	init_color_components(mlx_texture_t *texture, int pixel_index, 
+void	init_color_components(mlx_texture_t *texture, int pixel_index,
 							t_color_components *color)
 {
 	color->r = texture->pixels[pixel_index];
@@ -63,8 +62,8 @@ uint32_t	get_texture_color(mlx_texture_t *texture, int tex_x, int tex_y)
 	rgba.g = 0;
 	rgba.b = 0;
 	rgba.a = 0xFF;
-	
-	if (pixel_index >= 0 && pixel_index < (int)(texture->width * texture->height * texture->bytes_per_pixel))
+	if (pixel_index >= 0 && pixel_index < (int)(texture->width
+		* texture->height * texture->bytes_per_pixel))
 	{
 		if (texture->bytes_per_pixel == 4 || texture->bytes_per_pixel == 3)
 		{
@@ -76,15 +75,13 @@ uint32_t	get_texture_color(mlx_texture_t *texture, int tex_x, int tex_y)
 	}
 	else
 		color = 0xFF00FFFF;
-	
 	return (color);
 }
 
 /* Draws a textured wall stripe by sampling the texture vertically.
  * Maps each screen pixel to the corresponding texture pixel and draws
  * the wall with proper texture scaling and positioning. */
-void	draw_textured_wall(t_game *game, int x, t_ray *ray, mlx_texture_t *texture, 
-							int line_height, int draw_start, int draw_end)
+void	draw_textured_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 {
 	int		tex_x;
 	int		tex_y;
@@ -92,16 +89,17 @@ void	draw_textured_wall(t_game *game, int x, t_ray *ray, mlx_texture_t *texture,
 	double	tex_pos;
 	int		y;
 
-	tex_x = calculate_texture_x(game, ray, texture);
-	step = 1.0 * texture->height / line_height;
-	tex_pos = (draw_start - WINDOW_HEIGHT / 2 + line_height / 2) * step;
-	
-	y = draw_start;
-	while (y <= draw_end)
+	tex_x = calculate_texture_x(game, ray, params->texture);
+	step = 1.0 * params->texture->height / params->line_height;
+	tex_pos = (params->draw_start - WINDOW_HEIGHT
+			/ 2 + params->line_height / 2) * step;
+	y = params->draw_start;
+	while (y <= params->draw_end)
 	{
-		tex_y = (int)tex_pos & (texture->height - 1);
+		tex_y = (int)tex_pos & (params->texture->height - 1);
 		tex_pos += step;
-		mlx_put_pixel(game->img, x, y, get_texture_color(texture, tex_x, tex_y));
+		mlx_put_pixel(game->img, params->x, y,
+			get_texture_color(params->texture, tex_x, tex_y));
 		y++;
 	}
 }
@@ -109,7 +107,7 @@ void	draw_textured_wall(t_game *game, int x, t_ray *ray, mlx_texture_t *texture,
 /* Draws a solid colored wall stripe when no texture is available.
  * Uses different colors for each wall direction (red=east, blue=west, 
  * green=south, white=north) for debugging purposes. */
-void	draw_colored_wall(t_game *game, int x, t_ray *ray, int draw_start, int draw_end)
+void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 {
 	uint32_t	color;
 	int			y;
@@ -128,11 +126,10 @@ void	draw_colored_wall(t_game *game, int x, t_ray *ray, int draw_start, int draw
 		else
 			color = 0xFFFFFFFF;
 	}
-	
-	y = draw_start;
-	while (y <= draw_end)
+	y = params->draw_start;
+	while (y <= params->draw_end)
 	{
-		mlx_put_pixel(game->img, x, y, color);
+		mlx_put_pixel(game->img, params->x, y, color);
 		y++;
 	}
 }

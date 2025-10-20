@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr      */
+/*   Updated: 2025/10/20 10:36:26 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	handle_mouse(double xpos, double ypos, void *param)
 {
-	t_game		*game;
+	t_game			*game;
 	static double	last_x = WINDOW_WIDTH / 2;
-	double		delta_x;
-	
+	double			delta_x;
+
 	game = (t_game *)param;
 	(void)ypos;
 	delta_x = xpos - last_x;
@@ -26,10 +26,11 @@ void	handle_mouse(double xpos, double ypos, void *param)
 		rotate_player(game, delta_x * 0.001);
 }
 
-void	handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
+void	handle_mouse_click(mouse_key_t button, action_t action,
+		modifier_key_t mods, void *param)
 {
 	t_game	*game;
-	
+
 	game = (t_game *)param;
 	(void)mods;
 	if (action == MLX_PRESS)

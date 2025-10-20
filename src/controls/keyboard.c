@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/18 13:03:13 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:34:17 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	on_close(void *param)
 {
-    t_game *game = (t_game *)param;
+	t_game	*game;
 
-    cleanup_game(game);
+	game = (t_game *)param;
+	cleanup_game(game);
 	exit(1);
 }
-
 
 /**
  * Handle special key interactions (doors and quick actions)
@@ -32,11 +32,8 @@ void	on_close(void *param)
  */
 static void	handle_special_keys(t_game *game, int key)
 {
-	
 	if (key == MLX_KEY_R)
-	{
-		rotate_player(game, 3.14159);  // Just do quick turn for non-bonus
-	}
+		rotate_player(game, 3.14159);
 }
 
 /**
@@ -51,7 +48,7 @@ static void	handle_special_keys(t_game *game, int key)
 void	handle_keyboard(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
-	
+
 	game = (t_game *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{

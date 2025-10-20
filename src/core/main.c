@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/18 14:11:46 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:18:49 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	game_loop(game);
-    printf("DEBUG: full cleanup done\n");
 	return (0);
 }

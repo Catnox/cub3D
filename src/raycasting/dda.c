@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/08/31 15:30:00 by radubos           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:31:45 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /* Performs one step of the DDA algorithm to traverse the grid.
- * Moves the ray to the next grid intersection based on which side has the shorter distance.
+ * Moves the ray to the next grid intersection
+ * based on which side has the shorter distance.
  * Updates ray position and determines which side of the grid cell was hit. */
 static void	dda_step(t_ray *ray)
 {
@@ -36,8 +37,8 @@ static void	dda_step(t_ray *ray)
  * Sets the hit flag when a collision is detected. */
 static int	check_wall_hit(t_ray *ray, t_game *game)
 {
-	if (ray->map_x < 0 || ray->map_x >= game->map->width ||
-		ray->map_y < 0 || ray->map_y >= game->map->height)
+	if (ray->map_x < 0 || ray->map_x >= game->map->width
+		|| ray->map_y < 0 || ray->map_y >= game->map->height)
 	{
 		ray->hit = 1;
 		return (1);
@@ -56,20 +57,21 @@ static int	check_wall_hit(t_ray *ray, t_game *game)
 void	perform_dda(t_ray *ray, t_game *game)
 {
 	int	max_steps;
-	
+
 	max_steps = 0;
 	while (ray->hit == 0 && max_steps < game->map->width + game->map->height)
 	{
 		max_steps++;
 		dda_step(ray);
 		if (check_wall_hit(ray, game))
-			break;
+			break ;
 	}
-	
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - game->player->pos.x + (1 - ray->step_x) / 2) / ray->dir.x;
+		ray->perp_wall_dist = (ray->map_x - game->player->pos.x
+				+ (1 - ray->step_x) / 2) / ray->dir.x;
 	else
-		ray->perp_wall_dist = (ray->map_y - game->player->pos.y + (1 - ray->step_y) / 2) / ray->dir.y;
+		ray->perp_wall_dist = (ray->map_y - game->player->pos.y
+				+ (1 - ray->step_y) / 2) / ray->dir.y;
 	if (ray->perp_wall_dist <= 0)
 		ray->perp_wall_dist = 0.1;
 }

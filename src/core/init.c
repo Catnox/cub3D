@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/17 13:57:04 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:20:01 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@
  * @param game Pointer to the main game structure
  * @return 0 on success, 1 on failure
  */
-int init_game_state_n_MLX(t_game *game)
+int	init_game_state_n_mlx(t_game *game)
 {
 	if (!game)
 		return (1);
 	game->is_running = 1;
 	game->game_over = 0;
-
 	game->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!game->mlx)
 		return (error_exit("Failed to initialize MLX42"), 1);
@@ -40,7 +39,7 @@ int init_game_state_n_MLX(t_game *game)
 /**
  * Master initialization function for the entire game (NON-BONUS VERSION)
  * 
- * This function orchestrates the complete initialization process of the cub3D game.
+ * This function initializes all necessary components for the game to run.
  * It performs the following steps in order:
  * 1. Clears the game structure memory
  * 2. Initializes MLX42 graphics system and game state
@@ -57,8 +56,9 @@ int init_game_state_n_MLX(t_game *game)
  */
 int	init_game(t_game *game, char *map_file)
 {
-	if (init_game_state_n_MLX(game) != 0)
-		return (error_exit_init(game, "Failed to initialize game state and MLX42"));
+	if (init_game_state_n_mlx(game) != 0)
+		return (error_exit_init(game,
+				"Failed to initialize game state and MLX42"));
 	if (parse_cub_file(game, map_file) != 0)
 		return (error_exit_init(game, "Failed to parse .cub file"));
 	if (find_player_position(game) != 0)

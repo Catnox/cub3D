@@ -6,14 +6,13 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 15:08:45 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/18 14:13:22 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:47:10 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "cub3d.h"
 
-
-void clean_map(t_game *game)
+void	clean_map(t_game *game)
 {
 	printf("Cleaning up map...\n");
 	if (!game || !game->map)
@@ -24,40 +23,42 @@ void clean_map(t_game *game)
 	game->map = NULL;
 }
 
+static void	clean_map_textures(t_game *game)
+{
+	if (game->map->textures.north)
+	{
+		mlx_delete_texture(game->map->textures.north);
+		game->map->textures.north = NULL;
+	}
+	if (game->map->textures.south)
+	{
+		mlx_delete_texture(game->map->textures.south);
+		game->map->textures.south = NULL;
+	}
+	if (game->map->textures.east)
+	{
+		mlx_delete_texture(game->map->textures.east);
+		game->map->textures.east = NULL;
+	}
+	if (game->map->textures.west)
+	{
+		mlx_delete_texture(game->map->textures.west);
+		game->map->textures.west = NULL;
+	}
+}
+
 void	clean_textures(t_game *game)
 {
 	if (!game)
 		return ;
 	if (game->map)
-	{
-		if (game->map->textures.north)
-		{
-			mlx_delete_texture(game->map->textures.north);
-			game->map->textures.north = NULL;
-		}
-		if (game->map->textures.south)
-		{
-			mlx_delete_texture(game->map->textures.south);
-			game->map->textures.south = NULL;
-		}
-		if (game->map->textures.east)
-		{
-			mlx_delete_texture(game->map->textures.east);
-			game->map->textures.east = NULL;
-		}
-		if (game->map->textures.west)
-		{
-			mlx_delete_texture(game->map->textures.west);
-			game->map->textures.west = NULL;
-		}
-	}
+		clean_map_textures(game);
 	if (game->textures)
 	{
 		free(game->textures);
 		game->textures = NULL;
 	}
 }
-
 
 /**
  * Master cleanup function for complete game shutdown
@@ -75,11 +76,11 @@ void	clean_textures(t_game *game)
  * 
  * @param game Pointer to the main game structure to clean up
  */
-void cleanup_game(t_game *game)
+void	cleanup_game(t_game *game)
 {
 	if (game->map)
 	{
-    	clean_textures(game);
+		clean_textures(game);
 		clean_map(game);
 	}
 	if (game->player)
@@ -87,8 +88,6 @@ void cleanup_game(t_game *game)
 		free(game->player);
 		game->player = NULL;
 	}
-    if (game->mlx)
-	{
-        mlx_terminate(game->mlx);
-	}
+	if (game->mlx)
+		mlx_terminate(game->mlx);
 }

@@ -6,7 +6,7 @@
 #    By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/10/18 11:34:41 by mknoll           ###   ########.fr        #
+#    Updated: 2025/10/20 10:56:21 by mknoll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,16 +26,23 @@ SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/core/init.c \
        $(SRCDIR)/core/game_loop.c \
        $(SRCDIR)/parsing/parse_cub.c \
+       $(SRCDIR)/parsing/parse_file_utils.c \
+       $(SRCDIR)/parsing/parse_line_utils.c \
        $(SRCDIR)/parsing/parse_map.c \
+       $(SRCDIR)/parsing/parse_map_utils.c \
+       $(SRCDIR)/parsing/parse_map_validation.c \
        $(SRCDIR)/parsing/parse_textures.c \
        $(SRCDIR)/parsing/parse_player.c \
+       $(SRCDIR)/parsing/parse_player_utils.c \
        $(SRCDIR)/parsing/validate_map.c \
        $(SRCDIR)/parsing/parse_colors.c \
        $(SRCDIR)/raycasting/raycasting.c \
        $(SRCDIR)/raycasting/dda.c \
        $(SRCDIR)/rendering/render.c \
+	   $(SRCDIR)/rendering/wall_utils.c \
        $(SRCDIR)/controls/keyboard.c \
        $(SRCDIR)/controls/movements.c \
+       $(SRCDIR)/controls/movement_utils.c \
        $(SRCDIR)/utils/utils.c \
        $(SRCDIR)/utils/cleanup.c \
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+         #
+#    By: radubos <radubos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/10/20 10:56:21 by mknoll           ###   ########.fr        #
+#    Updated: 2025/10/20 22:40:44 by radubos          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,8 +73,9 @@ $(LIBFT):
 
 $(MLX42):
 	@echo "Compiling MLX42..."
-	@if [ ! -d "$(MLX42DIR)" ]; then \
+	@if [ ! -f "$(MLX42DIR)/CMakeLists.txt" ]; then \
 		echo "Cloning MLX42..."; \
+		rm -rf $(MLX42DIR); \
 		git clone https://github.com/codam-coding-college/MLX42.git $(MLX42DIR); \
 	fi
 	@cmake -B $(MLX42DIR)/build -S $(MLX42DIR)

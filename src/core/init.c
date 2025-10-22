@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 12:45:20 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/23 00:13:18 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	init_game_state_n_mlx(t_game *game)
 {
 	if (!game)
 		return (1);
-	game->is_running = 1;
-	game->game_over = 0;
 	game->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", true);
 	if (!game->mlx)
 		return (1);
@@ -93,6 +91,5 @@ int	init_game(t_game *game, char *map_file)
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 		return (error_exit_init(game, "Failed to display image"));
 	mlx_resize_hook(game->mlx, resize_callback, game);
-	game->is_running = 1;
 	return (0);
 }

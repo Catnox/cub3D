@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 13:08:24 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/23 00:13:17 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@
 # define TEXTURE_SIZE 64
 # define MOVE_SPEED 0.08
 # define ROT_SPEED 0.025
-
-/* Forward declarations */
-typedef struct s_node	t_node;
 
 /* Colors */
 typedef struct s_color
@@ -83,7 +80,6 @@ typedef struct s_player
 	t_vec2		pos;
 	t_vec2		dir;
 	t_vec2		plane;
-	int			keys;
 }	t_player;
 
 /* Ray */
@@ -108,9 +104,6 @@ typedef struct s_game
 	mlx_image_t	*img;
 	t_map		*map;
 	t_player	*player;
-	t_texture	*textures;
-	int			is_running;
-	int			game_over;
 }	t_game;
 
 /* Structure to hold map parsing parameters */
@@ -120,26 +113,6 @@ typedef struct s_map_params
 	int	height;
 	int	width;
 }	t_map_params;
-
-/**
- * Structure to hold direction and camera plane vectors
- */
-typedef struct s_direction_data
-{
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
-}	t_direction_data;
-
-/**
- * Structure to map texture identifiers to their storage locations
- */
-typedef struct s_texture_map
-{
-	char			*identifier;
-	mlx_texture_t	**texture_ptr;
-}	t_texture_map;
 
 typedef struct s_wall_draw_params
 {
@@ -215,15 +188,10 @@ void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params);
 void	draw_textured_wall(t_game *game, t_ray *ray,
 			t_wall_draw_params *params);
 void	draw_floor_ceiling(t_game *game);
-void	draw_minimap(t_game *game);
-void	apply_texture(t_game *game, int x, int y, mlx_texture_t *texture);
 
 /* Controls functions */
 void	handle_keyboard(mlx_key_data_t keydata, void *param);
 void	handle_continuous_input(t_game *game);
-void	handle_mouse(double xpos, double ypos, void *param);
-void	handle_mouse_click(mouse_key_t button, action_t action,
-			modifier_key_t mods, void *param);
 void	rotate_player(t_game *game, double angle);
 
 /* Movement utility functions */
@@ -236,18 +204,7 @@ void	move_player(t_game *game, int direction);
 void	error_exit(char *message);
 void	free_split(char **split);
 int		is_valid_map_char(char c);
-double	normalize_angle(double angle);
 void	clean_textures(t_game *game);
 void	clean_map(t_game *game);
-
-/* Game Over functions */
-void	render_game_over_screen(t_game *game);
-void	handle_game_over(t_game *game);
-void	handle_game_over_input(t_game *game, mlx_key_data_t keydata);
-void	restart_game(t_game *game);
-void	reset_player_position(t_game *game);
-void	draw_simple_game_over(t_game *game, int start_x, int start_y);
-void	draw_simple_message(t_game *game, int start_x,
-			int start_y, const char *message);
 
 #endif

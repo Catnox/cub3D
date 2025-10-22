@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 13:02:32 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/23 00:13:19 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,12 @@ static int	allocate_game_structures(t_game *game)
 {
 	game->map = ft_calloc(1, sizeof(t_map));
 	game->player = ft_calloc(1, sizeof(t_player));
-	game->textures = ft_calloc(1, sizeof(t_texture));
-	if (!game->map || !game->player || !game->textures)
+	if (!game->map || !game->player)
 	{
 		if (game->map)
 			free(game->map);
 		if (game->player)
 			free(game->player);
-		if (game->textures)
-			free(game->textures);
 		return (1);
 	}
 	game->map->floor_color.r = -1;

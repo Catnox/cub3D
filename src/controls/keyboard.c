@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 13:13:40 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/22 23:20:29 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ static void	handle_movement_rotation(t_game *game)
 		rotate_player(game, -ROT_SPEED);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		rotate_player(game, ROT_SPEED);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
-		rotate_player(game, -ROT_SPEED * 2);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
-		rotate_player(game, ROT_SPEED * 2);
 }
 
 /**

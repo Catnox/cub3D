@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 15:08:45 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/20 12:22:20 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/23 00:13:18 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ void	clean_textures(t_game *game)
 		return ;
 	if (game->map)
 		clean_map_textures(game);
-	if (game->textures)
-	{
-		free(game->textures);
-		game->textures = NULL;
-	}
 }
 
 /**

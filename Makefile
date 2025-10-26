@@ -6,7 +6,7 @@
 #    By: radubos <radubos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/10/22 23:48:40 by radubos          ###   ########.fr        #
+#    Updated: 2025/10/26 16:46:23 by radubos          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,9 @@ SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/raycasting/raycasting.c \
        $(SRCDIR)/raycasting/dda.c \
        $(SRCDIR)/rendering/render.c \
-	   $(SRCDIR)/rendering/wall_utils.c \
+	$(SRCDIR)/rendering/wall_utils.c \
        $(SRCDIR)/controls/keyboard.c \
        $(SRCDIR)/controls/movements.c \
-       $(SRCDIR)/controls/movement_utils.c \
        $(SRCDIR)/utils/utils.c \
        $(SRCDIR)/utils/cleanup.c \
 

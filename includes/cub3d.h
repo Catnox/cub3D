@@ -6,7 +6,7 @@
 /*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/23 00:13:17 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/26 16:48:12 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ void	set_player_direction(t_player *player, char dir);
 void	cast_rays(t_game *game);
 void	init_ray(t_ray *ray, t_player *player, int x, t_game *game);
 void	perform_dda(t_ray *ray, t_game *game);
-double	calculate_distance(t_ray *ray, t_player *player);
 
 /* Rendering functions */
 void	render_frame(t_game *game);
@@ -191,8 +190,8 @@ void	draw_floor_ceiling(t_game *game);
 
 /* Controls functions */
 void	handle_keyboard(mlx_key_data_t keydata, void *param);
-void	handle_continuous_input(t_game *game);
 void	rotate_player(t_game *game, double angle);
+void	handle_movement_rotation(t_game *game);
 
 /* Movement utility functions */
 int		check_collision(t_game *game, double x, double y);

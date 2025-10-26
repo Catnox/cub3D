@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 13:00:26 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/25 22:30:43 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ int	error_exit_init(t_game *game, char *msg)
 {
 	(void)game;
 	(void)msg;
+	/* error_exit(msg);  fonction propose par ia
+	cleanup_game(game); */ 
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/23 00:13:18 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/26 16:59:29 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param height New window height
  * @param param Pointer to game structure
  */
-static void	resize_callback(int32_t width, int32_t height, void *param)
+/* static void	resize_callback(int32_t width, int32_t height, void *param)
 {
 	t_game		*game;
 	mlx_image_t	*new_img;
@@ -39,7 +39,7 @@ static void	resize_callback(int32_t width, int32_t height, void *param)
 	game->img = new_img;
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 		mlx_delete_image(game->mlx, game->img);
-}
+} */
 
 /**
  * Initialize game state and MLX42 graphics library
@@ -64,7 +64,7 @@ int	init_game_state_n_mlx(t_game *game)
 }
 
 /**
- * Master initialization function for the entire game (NON-BONUS VERSION)
+ * Master initialization function for the entire game
  * 
  * This function initializes all necessary components for the game to run.
  * It performs the following steps in order:
@@ -90,6 +90,6 @@ int	init_game(t_game *game, char *map_file)
 				"Failed to initialize game state and MLX42"));
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 		return (error_exit_init(game, "Failed to display image"));
-	mlx_resize_hook(game->mlx, resize_callback, game);
+	//mlx_resize_hook(game->mlx, resize_callback, game);
 	return (0);
 }

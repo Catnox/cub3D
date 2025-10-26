@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_player.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 13:00:27 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/26 16:09:14 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	setup_player_at_position(t_game *game, int x, int y, char spawn_dir)
  * Ensures exactly one player position exists.
  * 
  * @param game Pointer to game structure
- * @return 0 on success, 1 if no player or multiple players found
+ * @return 0 on success, 1 if no player found
  */
 int	find_player_position(t_game *game)
 {

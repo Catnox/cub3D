@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:30:00 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/20 10:57:16 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/26 15:56:14 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	find_map_start(char **lines)
 			|| ft_strncmp(lines[i], "SO ", 3) == 0
 			|| ft_strncmp(lines[i], "WE ", 3) == 0
 			|| ft_strncmp(lines[i], "EA ", 3) == 0
-			|| ft_strncmp(lines[i], "DO ", 3) == 0
 			|| ft_strncmp(lines[i], "F ", 2) == 0
 			|| ft_strncmp(lines[i], "C ", 2) == 0
 			|| lines[i][0] == '\0')
@@ -77,8 +76,7 @@ int	count_map_lines(char **lines, int map_start)
 	{
 		if (ft_strchr(lines[i], '1') || ft_strchr(lines[i], '0')
 			|| ft_strchr(lines[i], 'N') || ft_strchr(lines[i], 'S')
-			|| ft_strchr(lines[i], 'E') || ft_strchr(lines[i], 'W')
-			|| ft_strchr(lines[i], 'D'))
+			|| ft_strchr(lines[i], 'E') || ft_strchr(lines[i], 'W'))
 			map_height++;
 		else if (lines[i][0] != '\0')
 			break ;

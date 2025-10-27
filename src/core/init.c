@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 12:45:20 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/27 11:16:56 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ static void	resize_callback(int32_t width, int32_t height, void *param)
 		return ;
 	game->img = new_img;
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
+	{
 		mlx_delete_image(game->mlx, game->img);
+		return ;
+	}
+	render_frame(game);
 }
 
 /**

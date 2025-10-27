@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:47:21 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/27 11:16:55 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	draw_textured_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 
 	tex_x = calculate_texture_x(game, ray, params->texture);
 	step = 1.0 * params->texture->height / params->line_height;
-	tex_pos = (params->draw_start - WINDOW_HEIGHT
+	tex_pos = (params->draw_start - (int)game->img->height
 			/ 2 + params->line_height / 2) * step;
 	y = params->draw_start;
 	while (y <= params->draw_end)

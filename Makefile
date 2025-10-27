@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: radubos <radubos@student.42.fr>            +#+  +:+       +#+         #
+#    By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/10/26 16:46:23 by radubos          ###   ########.fr        #
+#    Updated: 2025/10/27 14:24:11 by mknoll           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ CFLAGS = -Wall -Wextra -Werror -g
 # Directories
 SRCDIR = src
 INCDIR = includes
-LIBFTDIR = libft
+LIBFTDIR = libs/libft
 MLX42DIR = libs/MLX42
 OBJDIR = obj
 
-# Source files (NON-BONUS VERSION)
+# Source files
 SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/core/init.c \
        $(SRCDIR)/core/game_loop.c \

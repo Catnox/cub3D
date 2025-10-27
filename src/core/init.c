@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/26 16:59:29 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/27 14:34:43 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/**
+/*
  * Callback function for window resize events
  * 
  * This function is called whenever the window is resized.
@@ -22,7 +22,7 @@
  * @param height New window height
  * @param param Pointer to game structure
  */
-/* static void	resize_callback(int32_t width, int32_t height, void *param)
+static void	resize_callback(int32_t width, int32_t height, void *param)
 {
 	t_game		*game;
 	mlx_image_t	*new_img;
@@ -39,7 +39,7 @@
 	game->img = new_img;
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 		mlx_delete_image(game->mlx, game->img);
-} */
+}
 
 /**
  * Initialize game state and MLX42 graphics library
@@ -82,14 +82,13 @@ int	init_game_state_n_mlx(t_game *game)
 int	init_game(t_game *game, char *map_file)
 {
 	if (parse_cub_file(game, map_file) != 0)
-		return (error_exit_init(game, "Failed to parse .cub file"));
+		return (1);
 	if (find_player_position(game) != 0)
-		return (error_exit_init(game, "Failed to find player position"));
+		return (1);
 	if (init_game_state_n_mlx(game) != 0)
-		return (error_exit_init(game,
-				"Failed to initialize game state and MLX42"));
+		return (1);
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
-		return (error_exit_init(game, "Failed to display image"));
-	//mlx_resize_hook(game->mlx, resize_callback, game);
+		return (1);
+	mlx_resize_hook(game->mlx, resize_callback, game);
 	return (0);
 }

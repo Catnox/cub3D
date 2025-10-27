@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/23 00:13:19 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/27 14:36:40 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	parse_cub_file(t_game *game, char *filename)
 	int		i;
 
 	if (validate_cub_extension(filename) != 0)
-		return (1);
+		return (error_exit("Invalid .cub file extension"), 1);
 	lines = open_and_read_file(filename);
 	if (!lines)
 		return (1);

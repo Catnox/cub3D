@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 13:03:34 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/27 14:28:51 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	load_texture(char *path, mlx_texture_t **texture_ptr, char *id)
 }
 
 /**
- * Process a texture line using lookup table approach
+ * Process a texture 
  * 
  * @param game Pointer to game structure
  * @param identifier Texture identifier (NO, SO, EA, WE, DO)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/26 20:43:54 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/27 14:03:00 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	draw_textured_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 
 	tex_x = calculate_texture_x(game, ray, params->texture);
 	step = 1.0 * params->texture->height / params->line_height;
-	tex_pos = (params->draw_start - WINDOW_HEIGHT
+	tex_pos = (params->draw_start - (int)game->img->height
 			/ 2 + params->line_height / 2) * step;
 	y = params->draw_start;
 	while (y <= params->draw_end)
@@ -104,32 +104,3 @@ void	draw_textured_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 	}
 }
 
-/* Draws a solid colored wall stripe when no texture is available.
- * Uses different colors for each wall direction (red=east, blue=west, 
- * green=south, white=north) for debugging purposes. */
-/* void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
-{
-	uint32_t	color;
-	int			y;
-
-	if (ray->side == 0)
-	{
-		if (ray->step_x > 0)
-			color = 0xFF0000FF;
-		else
-			color = 0x0000FFFF;
-	}
-	else
-	{
-		if (ray->step_y > 0)
-			color = 0x00FF00FF;
-		else
-			color = 0xFFFFFFFF;
-	}
-	y = params->draw_start;
-	while (y <= params->draw_end)
-	{
-		mlx_put_pixel(game->img, params->x, y, color);
-		y++;
-	}
-} */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 13:12:21 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/26 20:44:25 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ void	draw_walls(t_game *game, int x, t_ray *ray)
 	params.draw_start = draw_start;
 	params.draw_end = draw_end;
 	params.texture = texture;
-	if (!texture)
+	/* if (!texture)
 	{
 		draw_colored_wall(game, ray, &params);
 		return ;
-	}
+	} */
 	draw_textured_wall(game, ray, &params);
 }

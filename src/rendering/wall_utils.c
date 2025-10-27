@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:47:21 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/26 20:43:54 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	draw_textured_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 /* Draws a solid colored wall stripe when no texture is available.
  * Uses different colors for each wall direction (red=east, blue=west, 
  * green=south, white=north) for debugging purposes. */
-void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
+/* void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 {
 	uint32_t	color;
 	int			y;
@@ -132,4 +132,4 @@ void	draw_colored_wall(t_game *game, t_ray *ray, t_wall_draw_params *params)
 		mlx_put_pixel(game->img, params->x, y, color);
 		y++;
 	}
-}
+} */

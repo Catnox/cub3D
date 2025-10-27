@@ -1,0 +1,16 @@
+NO textures/test/grey_stone.xpm42
+SO textures/test/purple_stone.xpm42
+WE textures/test/red_brick.xpm42
+EA textures/test/wood.xpm42
+
+F 18,53,25
+C 153,204,255
+
+111111111111
+1         11
+1          1
+111111111111
+10S000000001
+111111111111
+11         1
+111111111111

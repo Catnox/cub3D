@@ -6,7 +6,7 @@
 /*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/25 22:30:43 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/27 14:44:36 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,4 @@ int	is_valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S'
 		|| c == 'E' || c == 'W' || c == ' ');
-}
-
-int	error_exit_init(t_game *game, char *msg)
-{
-	(void)game;
-	(void)msg;
-	/* error_exit(msg);  fonction propose par ia
-	cleanup_game(game); */ 
-	return (1);
 }

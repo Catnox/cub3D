@@ -6,7 +6,7 @@
 /*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/26 16:48:12 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/27 14:44:48 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ int		init_game(t_game *game, char *map_file);
 void	cleanup_game(t_game *game);
 void	game_loop(t_game *game);
 void	on_close(void *param);
-int		error_exit_init(t_game *game, char *msg);
 
 /* Parsing functions */
 int		parse_cub_file(t_game *game, char *filename);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/27 14:34:43 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/28 15:35:21 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,8 @@ int	init_game_state_n_mlx(t_game *game)
  * 1. Parses the .cub map file for textures, colors, and map data
  * 2. Locates the player's starting position on the map
  * 3. Initializes MLX42 graphics system and game state
- * 4. Sets up basic player data (position and direction only)
- * 5. Displays the main image buffer on the window
- * 6. Sets up window resize callback
+ * 4. Displays the main image buffer on the window
+ * 5. Sets up window resize callback
  *
  * @param game Pointer to the main game structure to initialize
  * @param map_file Path to the .cub map file to load

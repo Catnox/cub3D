@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/20 10:33:10 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/28 15:44:28 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
  * - '0' for empty space
  * - '1' for walls
  * - 'N', 'S', 'E', 'W' for player start positions
- * - 'D' for doors
  * 
  * @param map Pointer to the map structure to validate
  * @return 0 if valid, 1 if invalid with error message

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/27 14:28:51 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/10/28 12:36:04 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * identifier string. This avoids complex pointer-to-pointer mapping.
  * 
  * @param game Pointer to game structure
- * @param identifier Texture identifier (NO, SO, EA, WE, DO)
+ * @param identifier Texture identifier (NO, SO, EA, WE)
  * @return Pointer to the texture location, or NULL if unknown
  */
 static mlx_texture_t	**get_texture_ptr_by_id(t_game *game, char *identifier)
@@ -61,7 +61,7 @@ static int	load_texture(char *path, mlx_texture_t **texture_ptr, char *id)
  * Process a texture 
  * 
  * @param game Pointer to game structure
- * @param identifier Texture identifier (NO, SO, EA, WE, DO)
+ * @param identifier Texture identifier (NO, SO, EA, WE)
  * @param path Path to texture file
  * @return 0 on success, 1 on failure
  */

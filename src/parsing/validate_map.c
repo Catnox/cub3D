@@ -6,7 +6,7 @@
 /*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/28 15:44:28 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/29 13:31:35 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ int	validate_map(t_map *map)
 	}
 	if (player_count != 1)
 		return (error_exit("Map must contain exactly one player"), 1);
+	if (validate_map_closed(map) != 0)
+		return (1);
 	return (0);
 }

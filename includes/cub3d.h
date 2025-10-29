@@ -6,7 +6,7 @@
 /*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 15:30:00 by radubos           #+#    #+#             */
-/*   Updated: 2025/10/27 14:44:48 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/29 13:31:34 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int		parse_textures(t_game *game, char *line);
 int		parse_colors(t_game *game, char *line);
 int		parse_map(t_game *game, char **lines);
 int		validate_map(t_map *map);
+int		validate_map_closed(t_map *map);
 int		find_player_position(t_game *game);
 int		is_valid_map_char(char c);
 

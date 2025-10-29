@@ -1,0 +1,12 @@
+NO ./assets/textures/a.png
+SO ./assets/textures/b.png
+WE ./assets/textures/c.png
+EA ./assets/textures/d.png
+
+F 220,100,0
+C 225,30,0
+
+111111
+1000 1
+10N001
+111111

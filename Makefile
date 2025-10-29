@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+         #
+#    By: radubos <radubos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 15:30:00 by radubos           #+#    #+#              #
-#    Updated: 2025/10/27 14:24:11 by mknoll           ###   ########.fr        #
+#    Updated: 2025/10/29 13:31:33 by radubos          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS = $(SRCDIR)/core/main.c \
        $(SRCDIR)/parsing/parse_player.c \
        $(SRCDIR)/parsing/parse_player_utils.c \
        $(SRCDIR)/parsing/validate_map.c \
+       $(SRCDIR)/parsing/validate_map_closed.c \
        $(SRCDIR)/parsing/parse_colors.c \
        $(SRCDIR)/raycasting/raycasting.c \
        $(SRCDIR)/raycasting/dda.c \

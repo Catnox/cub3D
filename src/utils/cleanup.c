@@ -6,7 +6,7 @@
 /*   By: radubos <radubos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 15:08:45 by mknoll            #+#    #+#             */
-/*   Updated: 2025/10/23 00:13:18 by radubos          ###   ########.fr       */
+/*   Updated: 2025/10/28 16:26:33 by radubos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	clean_textures(t_game *game)
  * 1. Clean textures (must be done BEFORE mlx_terminate)
  * 2. Clean map data
  * 3. Clean player
- * 4. Delete MLX images (must be done BEFORE mlx_terminate)
- * 5. Terminate MLX (must be LAST)
+ * 4. Terminate MLX (must be LAST)
  * 
  * @param game Pointer to the main game structure to clean up
  */
